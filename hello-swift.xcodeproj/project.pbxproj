@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		57BC43C435C7A58FDE0D1567 /* libPods-hello-swift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DD6A8F10D851F5A6FA94C023 /* libPods-hello-swift.a */; };
+		6F24E35C2D1324E600872E98 /* ExampleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F24E3542D1324E600872E98 /* ExampleProtocol.swift */; };
+		6F24E35D2D1324E600872E98 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F24E3512D1324E600872E98 /* Package.swift */; };
+		6F24E35E2D1324E600872E98 /* HelloSampleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F24E3592D1324E600872E98 /* HelloSampleTest.swift */; };
+		6F24E35F2D1324E600872E98 /* HelloSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F24E3562D1324E600872E98 /* HelloSample.swift */; };
+		6F24E3602D1324E600872E98 /* BasicSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F24E3532D1324E600872E98 /* BasicSample.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,47 +27,86 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		070DC59C976386AAEED863E3 /* Pods-hello-swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hello-swift.debug.xcconfig"; path = "Target Support Files/Pods-hello-swift/Pods-hello-swift.debug.xcconfig"; sourceTree = "<group>"; };
+		6F24E3512D1324E600872E98 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		6F24E3522D1324E600872E98 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		6F24E3532D1324E600872E98 /* BasicSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSample.swift; sourceTree = "<group>"; };
+		6F24E3542D1324E600872E98 /* ExampleProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleProtocol.swift; sourceTree = "<group>"; };
+		6F24E3562D1324E600872E98 /* HelloSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloSample.swift; sourceTree = "<group>"; };
+		6F24E3592D1324E600872E98 /* HelloSampleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloSampleTest.swift; sourceTree = "<group>"; };
+		6F24E3612D13251500872E98 /* AdvanceSample */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AdvanceSample; sourceTree = "<group>"; };
+		6FC6DBCF2D125ABA00BF3F64 /* hello-swiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "hello-swiftTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FE659B42D11CCDE00FB6A04 /* hello-swift */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "hello-swift"; sourceTree = BUILT_PRODUCTS_DIR; };
-		DD6A8F10D851F5A6FA94C023 /* libPods-hello-swift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-hello-swift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F73A2F94ADC57E19F7EC41B9 /* Pods-hello-swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hello-swift.release.xcconfig"; path = "Target Support Files/Pods-hello-swift/Pods-hello-swift.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		6FE659B62D11CCDE00FB6A04 /* hello-swift */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "hello-swift";
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
+		6FC6DBCC2D125ABA00BF3F64 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6FE659B12D11CCDE00FB6A04 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57BC43C435C7A58FDE0D1567 /* libPods-hello-swift.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0328C34BFAFED88FE6DE32C8 /* Pods */ = {
+		6F24E3552D1324E600872E98 /* BasicSample */ = {
 			isa = PBXGroup;
 			children = (
-				070DC59C976386AAEED863E3 /* Pods-hello-swift.debug.xcconfig */,
-				F73A2F94ADC57E19F7EC41B9 /* Pods-hello-swift.release.xcconfig */,
+				6F24E3532D1324E600872E98 /* BasicSample.swift */,
+				6F24E3542D1324E600872E98 /* ExampleProtocol.swift */,
 			);
-			path = Pods;
+			path = BasicSample;
+			sourceTree = "<group>";
+		};
+		6F24E3572D1324E600872E98 /* HelloSample */ = {
+			isa = PBXGroup;
+			children = (
+				6F24E3562D1324E600872E98 /* HelloSample.swift */,
+			);
+			path = HelloSample;
+			sourceTree = "<group>";
+		};
+		6F24E3582D1324E600872E98 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				6F24E3552D1324E600872E98 /* BasicSample */,
+				6F24E3572D1324E600872E98 /* HelloSample */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		6F24E35A2D1324E600872E98 /* HelloSampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				6F24E3592D1324E600872E98 /* HelloSampleTest.swift */,
+			);
+			path = HelloSampleTests;
+			sourceTree = "<group>";
+		};
+		6F24E35B2D1324E600872E98 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				6F24E35A2D1324E600872E98 /* HelloSampleTests */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		6FE659AB2D11CCDE00FB6A04 = {
 			isa = PBXGroup;
 			children = (
-				6FE659B62D11CCDE00FB6A04 /* hello-swift */,
+				6F24E3612D13251500872E98 /* AdvanceSample */,
+				6F24E3512D1324E600872E98 /* Package.swift */,
+				6F24E3522D1324E600872E98 /* README.md */,
+				6F24E3582D1324E600872E98 /* Sources */,
+				6F24E35B2D1324E600872E98 /* Tests */,
 				6FE659B52D11CCDE00FB6A04 /* Products */,
-				0328C34BFAFED88FE6DE32C8 /* Pods */,
 				A64867DD4BC3DB6599979253 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -72,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				6FE659B42D11CCDE00FB6A04 /* hello-swift */,
+				6FC6DBCF2D125ABA00BF3F64 /* hello-swiftTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -79,7 +123,6 @@
 		A64867DD4BC3DB6599979253 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DD6A8F10D851F5A6FA94C023 /* libPods-hello-swift.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -87,6 +130,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		6FC6DBCE2D125ABA00BF3F64 /* hello-swiftTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6FC6DBD52D125ABA00BF3F64 /* Build configuration list for PBXNativeTarget "hello-swiftTests" */;
+			buildPhases = (
+				AECB6A839FDAE68C156A12CC /* [CP] Check Pods Manifest.lock */,
+				6FC6DBCB2D125ABA00BF3F64 /* Sources */,
+				6FC6DBCC2D125ABA00BF3F64 /* Frameworks */,
+				6FC6DBCD2D125ABA00BF3F64 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "hello-swiftTests";
+			productName = "hello-swiftTests";
+			productReference = 6FC6DBCF2D125ABA00BF3F64 /* hello-swiftTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		6FE659B32D11CCDE00FB6A04 /* hello-swift */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6FE659BB2D11CCDE00FB6A04 /* Build configuration list for PBXNativeTarget "hello-swift" */;
@@ -100,9 +161,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				6FE659B62D11CCDE00FB6A04 /* hello-swift */,
 			);
 			name = "hello-swift";
 			productName = "hello-swift";
@@ -119,6 +177,9 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					6FC6DBCE2D125ABA00BF3F64 = {
+						CreatedOnToolsVersion = 16.2;
+					};
 					6FE659B32D11CCDE00FB6A04 = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -133,15 +194,29 @@
 			);
 			mainGroup = 6FE659AB2D11CCDE00FB6A04;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6F24E3502D13248500872E98 /* XCLocalSwiftPackageReference "../hello-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6FE659B52D11CCDE00FB6A04 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				6FE659B32D11CCDE00FB6A04 /* hello-swift */,
+				6FC6DBCE2D125ABA00BF3F64 /* hello-swiftTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6FC6DBCD2D125ABA00BF3F64 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		494BC8274F39D5BC3F6E2723 /* [CP] Check Pods Manifest.lock */ = {
@@ -160,6 +235,28 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-hello-swift-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AECB6A839FDAE68C156A12CC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-hello-swiftTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -186,16 +283,58 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		6FE659B02D11CCDE00FB6A04 /* Sources */ = {
+		6FC6DBCB2D125ABA00BF3F64 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6FE659B02D11CCDE00FB6A04 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6F24E35C2D1324E600872E98 /* ExampleProtocol.swift in Sources */,
+				6F24E35D2D1324E600872E98 /* Package.swift in Sources */,
+				6F24E35E2D1324E600872E98 /* HelloSampleTest.swift in Sources */,
+				6F24E35F2D1324E600872E98 /* HelloSample.swift in Sources */,
+				6F24E3602D1324E600872E98 /* BasicSample.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		6FC6DBD32D125ABA00BF3F64 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.renyan.hello-swiftTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		6FC6DBD42D125ABA00BF3F64 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.renyan.hello-swiftTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
 		6FE659B92D11CCDE00FB6A04 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -249,13 +388,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -306,37 +446,52 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
 		6FE659BC2D11CCDE00FB6A04 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 070DC59C976386AAEED863E3 /* Pods-hello-swift.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
+				"TEST_HOST[sdk=*]" = "";
+				TREAT_MISSING_BASELINES_AS_TEST_FAILURES = NO;
 			};
 			name = Debug;
 		};
 		6FE659BD2D11CCDE00FB6A04 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F73A2F94ADC57E19F7EC41B9 /* Pods-hello-swift.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
+				TREAT_MISSING_BASELINES_AS_TEST_FAILURES = NO;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6FC6DBD52D125ABA00BF3F64 /* Build configuration list for PBXNativeTarget "hello-swiftTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6FC6DBD32D125ABA00BF3F64 /* Debug */,
+				6FC6DBD42D125ABA00BF3F64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		6FE659AF2D11CCDE00FB6A04 /* Build configuration list for PBXProject "hello-swift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -356,6 +511,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		6F24E3502D13248500872E98 /* XCLocalSwiftPackageReference "../hello-swift" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../hello-swift";
+		};
+/* End XCLocalSwiftPackageReference section */
 	};
 	rootObject = 6FE659AC2D11CCDE00FB6A04 /* Project object */;
 }

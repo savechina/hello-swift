@@ -1,14 +1,14 @@
 //
-//  Basic.swift
+//  BasicSample.swift
 //  hello-swift
-//  Basic module
+//  BasicSample module
 //  Created by RenYan Wei on 2024/12/16.
 //
 
 import Foundation
 
 /// basic express sample
-func expressionSample() {
+public func expressionSample() {
     //define variable number
     var n = 42
     n = 50
@@ -29,7 +29,7 @@ func expressionSample() {
 }
 
 /// basic string sample
-func stringSample() {
+public func stringSample() {
     print("\nbasic string sample start ...")
     let apples = 3
     let oranges = 5
@@ -58,7 +58,7 @@ func greet(person: String, day: String) -> String {
     return "Hello \(person), today is \(day)."
 }
 
-func structSample() {
+public func structSample() {
     //simpleClass implement ExampleProtocol
     let simple = SimpleClass()
     simple.adjust()
