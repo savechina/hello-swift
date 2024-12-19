@@ -15,7 +15,7 @@ public func expressionSample() {
 
     //
     let m = 42
-
+    
     n = n + m
 
     //print

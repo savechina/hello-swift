@@ -8,26 +8,38 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/apple/swift-argument-parser.git",
-            from: "1.2.0"),
+            from: "1.5.0"),
+        .package(
+            url: "https://github.com/apple/swift-algorithms.git", from: "1.2.0"),
         .package(path: "./AdvanceSample"),
+        .package(path: "./LeetCodeSample"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
-        
+
         .target(name: "BasicSample"),
-        
+        .target(
+            name: "AlgoSample",
+            dependencies: [
+                .product(
+                    name: "Algorithms", package: "swift-algorithms")
+            ]),
         .executableTarget(
             name: "HelloSample",
             dependencies: [
                 .product(
                     name: "ArgumentParser", package: "swift-argument-parser"),
-                .product(name: "AdvanceSample",package: "AdvanceSample"),
-                "BasicSample",
+                .product(
+                    name: "Algorithms", package: "swift-algorithms"),
+                .product(name: "AdvanceSample", package: "AdvanceSample"),
+                .product(name: "LeetCodeSample", package: "LeetCodeSample"),
+                "BasicSample", "AlgoSample",
             ]
         ),
         .testTarget(
             name: "HelloSampleTests",
-            dependencies: [.target(name: "HelloSample")]),
+            dependencies: [.target(name: "HelloSample")]
+        ),
     ]
 )

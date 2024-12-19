@@ -4,12 +4,10 @@
 // Swift Argument Parser
 // https://swiftpackageindex.com/apple/swift-argument-parser/documentation
 
-import Foundation
+import AdvanceSample
 import ArgumentParser
 import BasicSample
-
-import AdvanceSample
-
+import Foundation
 
 @main
 struct HelloSample: ParsableCommand {
@@ -17,22 +15,23 @@ struct HelloSample: ParsableCommand {
         print("Hello, world!")
 
         //BasicSample
-        print("basic sample start ...")
+        print("--- basic sample start ... ---")
+        
         expressionSample()
 
         stringSample()
 
         structSample()
 
-        print("basic sample end .\n")
+        print("--- basic sample end . ---\n")
 
         //AdvanceSample
-        print("advance sample start ...")
+        print("--- advance sample start ... ---")
 
         AdvanceSample.advanceSample()
 
         AdvanceSample.jsonSample()
-        print("advance sample end .\n")
+        print("--- advance sample end . ---\n")
 
     }
 }

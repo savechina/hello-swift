@@ -34,8 +34,8 @@
 		6F24E3562D1324E600872E98 /* HelloSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloSample.swift; sourceTree = "<group>"; };
 		6F24E3592D1324E600872E98 /* HelloSampleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloSampleTest.swift; sourceTree = "<group>"; };
 		6F24E3612D13251500872E98 /* AdvanceSample */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AdvanceSample; sourceTree = "<group>"; };
-		6FC6DBCF2D125ABA00BF3F64 /* hello-swiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "hello-swiftTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6FE659B42D11CCDE00FB6A04 /* hello-swift */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "hello-swift"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6FC6DBCF2D125ABA00BF3F64 /* hello-swiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "hello-swiftTests.xctest"; path = "/Users/weirenyan/CodeRepo/funspace/hello-swift/build/Debug/hello-swiftTests.xctest"; sourceTree = "<absolute>"; };
+		6FE659B42D11CCDE00FB6A04 /* hello-swift */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = "hello-swift"; path = "/Users/weirenyan/CodeRepo/funspace/hello-swift/build/Debug/hello-swift"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,8 +114,6 @@
 		6FE659B52D11CCDE00FB6A04 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6FE659B42D11CCDE00FB6A04 /* hello-swift */,
-				6FC6DBCF2D125ABA00BF3F64 /* hello-swiftTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -490,7 +488,7 @@
 				6FC6DBD42D125ABA00BF3F64 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		6FE659AF2D11CCDE00FB6A04 /* Build configuration list for PBXProject "hello-swift" */ = {
 			isa = XCConfigurationList;
@@ -499,7 +497,7 @@
 				6FE659BA2D11CCDE00FB6A04 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		6FE659BB2D11CCDE00FB6A04 /* Build configuration list for PBXNativeTarget "hello-swift" */ = {
 			isa = XCConfigurationList;
@@ -508,7 +506,7 @@
 				6FE659BD2D11CCDE00FB6A04 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 

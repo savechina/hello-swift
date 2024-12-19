@@ -8,13 +8,19 @@
 import Testing
 import HelloSample
 import BasicSample
-
+import AlgoSample
 
 struct HelloSampleTest {
 
     @Test func sample() async throws {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.
         BasicSample.expressionSample()
+    }
+    
+    @Test func simpleAdd() async throws{
+        var sum = AlgoSample.AddTwo(x:1,y:2)
+        
+        print("sum:",sum)
     }
 
 }
