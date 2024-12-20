@@ -18,7 +18,7 @@ struct HelloSampleTest {
     }
     
     @Test func simpleAdd() async throws{
-        var sum = AlgoSample.AddTwo(x:1,y:2)
+        let sum = AlgoSample.AddTwo(x:1,y:2)
         
         print("sum:",sum)
     }

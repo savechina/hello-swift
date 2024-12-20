@@ -11,6 +11,7 @@ let package = Package(
             from: "1.5.0"),
         .package(
             url: "https://github.com/apple/swift-algorithms.git", from: "1.2.0"),
+        .package(url: "https://github.com/apple/swift-numerics", from: "1.0.0"),
         .package(path: "./AdvanceSample"),
         .package(path: "./LeetCodeSample"),
     ],
@@ -23,7 +24,8 @@ let package = Package(
             name: "AlgoSample",
             dependencies: [
                 .product(
-                    name: "Algorithms", package: "swift-algorithms")
+                    name: "Algorithms", package: "swift-algorithms"),
+                .product(name: "Numerics", package: "swift-numerics"),
             ]),
         .executableTarget(
             name: "HelloSample",
@@ -40,6 +42,11 @@ let package = Package(
         .testTarget(
             name: "HelloSampleTests",
             dependencies: [.target(name: "HelloSample")]
+        ),
+
+        .testTarget(
+            name: "AlgoSampleTests",
+            dependencies: [.target(name: "AlgoSample")]
         ),
     ]
 )

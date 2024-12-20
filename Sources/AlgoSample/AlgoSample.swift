@@ -7,6 +7,7 @@
 
 import Foundation
 import Algorithms
+import Numerics
 
 /// simple add ,calc two number sum
 /// 计算二个数之和
@@ -16,8 +17,8 @@ import Algorithms
 /// - Returns: sum , x and y
 public func AddTwo(x: Int, y: Int) -> Int {
     //计算两个数的和
-    var z = x + y
-
+    let z = x + y
+    
     return z
 }
 
@@ -31,7 +32,20 @@ public func AddTwo(x: Int, y: Int) -> Int {
 /// - Returns: sum 计算结果
 public func AddThree(x: Int, y: Int, z: Int) -> Int {
     //计算三个数的和
-    var n = x + y + z
+    let n = x + y + z
     
     return n
+}
+
+public func AddThreeNumber(x: Int, y: Int, z: Int) -> Int {
+    return 0
+}
+
+/// numeric multiply
+/// - Parameters:
+///   - a: a number
+///   - b: b number
+/// - Returns: result two number multiply sum
+public func multiply<T: Numeric>(_ a: T, _ b: T) -> T {
+    return a * b
 }
