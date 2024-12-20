@@ -58,6 +58,7 @@ func greet(person: String, day: String) -> String {
     return "Hello \(person), today is \(day)."
 }
 
+/// Struct Sample use SimpleStructure and SimpleClass
 public func structSample() {
     //simpleClass implement ExampleProtocol
     let simple = SimpleClass()
