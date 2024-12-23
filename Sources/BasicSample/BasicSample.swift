@@ -15,7 +15,7 @@ public func expressionSample() {
 
     //
     let m = 42
-    
+
     n = n + m
 
     //print
@@ -26,6 +26,62 @@ public func expressionSample() {
     let widthLabel = label + String(width)
 
     print(widthLabel)
+}
+
+private func compareInt(_ a: Int, _ b: Int) -> Int {
+    if a > b {
+        return 1
+    } else if a == b {
+        return 0
+    } else {
+        return -1
+    }
+}
+
+public func conditionSample() {
+
+    //if condition
+    var a = 3
+    var b = 5
+
+    var result = compareInt(a, b)
+
+    print("a < b :(3,5) ", result)
+
+    a = 6
+    b = 3
+    result = compareInt(a, b)
+
+    print("a > b :(6,3) ", result)
+
+    result = compareInt(2, 2)
+
+    print("a = b :(2,2) ", result)
+
+    //switch case
+    let vegetable = "red pepper"
+    switch vegetable {
+    case "celery":
+        print("Add some raisins and make ants on a log.")
+    case "cucumber", "watercress":
+        print("That would make a good tea sandwich.")
+    case let x where x.hasSuffix("pepper"):
+        print("Is it a spicy \(x)?")
+    default:
+        print("Everything tastes good in soup.")
+    }
+
+    //  for control flow
+    let individualScores = [75, 43, 103, 87, 12]
+    var teamScore = 0
+    for score in individualScores {
+        if score > 50 {
+            teamScore += 3
+        } else {
+            teamScore += 1
+        }
+    }
+    print("for teamScore", teamScore)
 }
 
 /// basic string sample
