@@ -18,9 +18,23 @@ struct HelloSampleTest {
         
         
         BasicSample.conditionSample()
+        
+        
+        BasicSample.stringSample()
+
     }
     
-    @Test func simpleAdd() async throws{
+    
+    @Test func collectionSampleTest() async throws {
+     
+        BasicSample.collectionSample()
+        
+        BasicSample.setsSample()
+        
+        BasicSample.dictionarySample()
+    }
+    
+    @Test func simpleAddTest() async throws{
         let sum = AlgoSample.AddTwo(x:1,y:2)
         
         print("sum:",sum)

@@ -100,9 +100,51 @@ public func stringSample() {
     let result = greet(person: "Bob", day: "Tuesday")
 
     print(result)
+    
+    let quotation = """
+    The White Rabbit put on his spectacles.  "Where shall I begin,
+    please your Majesty?" he asked.
+
+    "Begin at the beginning," the King said gravely, "and go on
+    till you come to the end; then stop."
+    """
+    
+    print(quotation)
+    
+    var emptyString = ""               // empty string literal
+    var anotherEmptyString = String()  // initializer syntax
+    // these two strings are both empty, and are equivalent to each other
+    
+    
+    if emptyString.isEmpty {
+        print("Nothing to see here")
+    }
+    // Prints "Nothing to see here"
+    
+    
+    var variableString = "Horse"
+    variableString += " and carriage"
+    // variableString is now "Horse and carriage"
+
+
+    let constantString = "Highlander"
+//    constantString += " and another Highlander"
+    // this reports a compile-time error - a constant string cannot be modified
+    
 
     print("basic string sample end.\n")
 
+}
+
+
+public func commentSample(){
+    //simple line comment
+    let i = Int32(16)
+    
+    print(i)
+    
+    
+    
 }
 
 /// greet say hello
