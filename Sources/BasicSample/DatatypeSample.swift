@@ -8,7 +8,7 @@
 import Foundation
 
 public func collectionSample() {
-
+    startSample(functionName: "DatatypeSample collectionSample")
     //array
     let array = [1, 2, 3, 4, 5, 6, 7, 8]
 
@@ -79,9 +79,13 @@ public func collectionSample() {
     // Item 4: Baking Powder
     // Item 5: Bananas
 
+    endSample(functionName: "DatatypeSample collectionSample")
 }
 
 public func setsSample() {
+
+    startSample(functionName: "DatatypeSample setsSample")
+
     //Sets
     var letters = Set<Character>()
     print("letters is of type Set<Character> with \(letters.count) items.")
@@ -139,9 +143,13 @@ public func setsSample() {
     // [1, 2, 9]
     print("symmetricDifference:", d)
 
+    endSample(functionName: "DatatypeSample setsSample")
+
 }
 
 public func dictionarySample() {
+    startSample(functionName: "DatatypeSample dictionarySample")
+
     //map
     var namesOfIntegers: [Int: String] = [:]
     // namesOfIntegers is an empty [Int: String] dictionary
@@ -196,9 +204,14 @@ public func dictionarySample() {
     }
     // Airport name: London Heathrow
     // Airport name: Toronto Pearson
+
+    endSample(functionName: "DatatypeSample dictionarySample")
+
 }
 
 public func subscriptSample() {
+    startSample(functionName: "DatatypeSample subscriptSample")
+
     struct TimesTable {
         let multiplier: Int
         subscript(index: Int) -> Int {
@@ -263,5 +276,218 @@ public func subscriptSample() {
     }
     let mars = Planet[4]
     print(mars)
+
+    endSample(functionName: "DatatypeSample subscriptSample")
+}
+
+/// compare min and max value in array
+/// - Parameter array: array data
+/// - Returns: an tuple arrary min and max value
+func minMax(array: [Int]) -> (min: Int, max: Int) {
+    var currentMin = array[0]
+    var currentMax = array[0]
+    for value in array[1..<array.count] {
+        if value < currentMin {
+            currentMin = value
+        } else if value > currentMax {
+            currentMax = value
+        }
+    }
+    return (currentMin, currentMax)
+}
+
+/// Variadic Parameters
+/// - Parameter numbers: numbers d
+/// - Returns: avg result
+func arithmeticMean(_ numbers: Double...) -> Double {
+    var total: Double = 0
+    for number in numbers {
+        total += number
+    }
+    return total / Double(numbers.count)
+}
+
+/// greeting default
+/// - Parameter person: person
+/// - Returns: greeting context
+func greeting(for person: String) -> String {
+    "Hello, " + person + "!"
+}
+
+/// greeting implicitly return value
+/// - Parameter person: person
+/// - Returns: greeting context
+func anotherGreeting(for person: String) -> String {
+    return "Hello, " + person + "!"
+}
+
+///
+/// an Nested Functions
+/// - Parameter backward: is backward
+/// - Returns: StepFunction. stepForward or stepBackward function
+func chooseStepFunction(backward: Bool) -> (Int) -> Int {
+    func stepForward(input: Int) -> Int { return input + 1 }
+    func stepBackward(input: Int) -> Int { return input - 1 }
+
+    return backward ? stepBackward : stepForward
+}
+
+/// functionSample
+public func functionSample() {
+
+    startSample(functionName: "DatatypeSample functionSample")
+
+    //function multiple return value.
+    let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
+    print("min is \(bounds.min) and max is \(bounds.max)")
+    // Prints "min is -6 and max is 109"
+
+    print("Variadic Parameters:")
+    //    Variadic Parameters
+    let ra = arithmeticMean(1, 2, 3, 4, 5)
+    // returns 3.0, which is the arithmetic mean of these five numbers
+    print(ra)
+    let rb = arithmeticMean(3, 8.25, 18.75)
+    // returns 10.0, which is the arithmetic mean of these three numbers
+    print(rb)
+
+    print(greeting(for: "Dave"))
+    // Prints "Hello, Dave!"
+    print(anotherGreeting(for: "Dave"))
+    // Prints "Hello, Dave!"
+
+    print(" Nested Functions:")
+    //
+    var currentValue = -4
+    let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
+    // moveNearerToZero now refers to the nested stepForward() function
+    while currentValue != 0 {
+        print("\(currentValue)... ")
+        currentValue = moveNearerToZero(currentValue)
+    }
+    print("zero!")
+    // -4...
+    // -3...
+    // -2...
+    // -1...
+    // zero!
+
+    endSample(functionName: "DatatypeSample functionSample")
+
+}
+
+//Base Shape class
+class Shape {
+    var description: String {
+        "Shape"
+    }
+
+    var area: Double { 0.0 }
+}
+// Rectangle subclass
+class Rectangle: Shape {
+    var width: Double
+    var height: Double
+
+    init(width: Double, height: Double) {
+
+        self.width = width
+        self.height = height
+    }
+
+    // 计算属性：area 的 getter
+    override var area: Double {
+        get {
+            return width * height
+        }
+        set(newArea) {
+            // 当设置 area 时，重新计算 width 和 height
+            height = newArea / width
+        }
+    }
+
+    override var description: String { "Rectangle" }
+}
+
+/// Circle subclass
+class Circle: Shape {
+    var radius: Double
+
+    init(radius: Double) {
+        self.radius = radius
+    }
+
+    // 只读计算属性
+    override var area: Double {
+        return .pi * radius * radius
+    }
+
+    override var description: String { "Rectangle" }
+}
+
+/// BlackjackCard and Nested Type structure
+struct BlackjackCard {
+
+    // nested Suit enumeration
+    enum Suit: Character {
+        case spades = "♠"
+        case hearts = "♡"
+        case diamonds = "♢"
+        case clubs = "♣"
+    }
+
+    // nested Rank enumeration
+    enum Rank: Int {
+        case two = 2
+        case three, four, five, six, seven, eight, nine, ten
+        case jack, queen, king, ace
+        struct Values {
+            let first: Int, second: Int?
+        }
+        var values: Values {
+            switch self {
+            case .ace:
+                return Values(first: 1, second: 11)
+            case .jack, .queen, .king:
+                return Values(first: 10, second: nil)
+            default:
+                return Values(first: self.rawValue, second: nil)
+            }
+        }
+    }
+
+    // BlackjackCard properties and methods
+    let rank: Rank, suit: Suit
+    var description: String {
+        var output = "suit is \(suit.rawValue),"
+        output += " value is \(rank.values.first)"
+        if let second = rank.values.second {
+            output += " or \(second)"
+        }
+        return output
+    }
+}
+
+public func classSample() {
+    startSample(functionName: "DatatypeSample classSample")
+
+    //    nested type
+    let theAceOfSpades = BlackjackCard(rank: .ace, suit: .spades)
+    print("theAceOfSpades: \(theAceOfSpades.description)")
+    // Prints "theAceOfSpades: suit is ♠, value is 1 or 11"
+
+    let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
+    // heartsSymbol is "♡"
+    print("heartsSymbol:", heartsSymbol)
+
+    let rect = Rectangle(width: 10, height: 5)
+    print("Rectangle area:", rect.area)  // 使用 getter，输出 50
+
+    rect.area = 100  // 使用 setter，新的 area
+    print("Rectangle height:", rect.height)  // 输出 10.0，计算得到的 height
+
+    let circle = Circle(radius: 5)
+    print("Circle area:", circle.area)  // 使用 getter，输出圆的面积
+    endSample(functionName: "DatatypeSample classSample")
 
 }
