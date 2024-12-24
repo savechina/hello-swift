@@ -6,9 +6,18 @@
 //
 
 import Foundation
+public func startSample(functionName:String){
+    print("---- basic \(functionName) ...start ----")
+}
+
+public func endSample(functionName:String){
+    print("---- basic \(functionName) ...end ----\n")
+}
 
 /// basic express sample
 public func expressionSample() {
+    startSample(functionName: "expressionSample")
+    
     //define variable number
     var n = 42
     n = 50
@@ -26,6 +35,8 @@ public func expressionSample() {
     let widthLabel = label + String(width)
 
     print(widthLabel)
+    
+    endSample(functionName: "expressionSample")
 }
 
 private func compareInt(_ a: Int, _ b: Int) -> Int {
@@ -86,7 +97,7 @@ public func conditionSample() {
 
 /// basic string sample
 public func stringSample() {
-    print("\nbasic string sample start ...")
+    print("----basic string sample start ...----")
     let apples = 3
     let oranges = 5
     let appleSummary = "I have \(apples) apples."
@@ -132,17 +143,25 @@ public func stringSample() {
     // this reports a compile-time error - a constant string cannot be modified
     
 
-    print("basic string sample end.\n")
+    print("----basic string sample end.----\n")
 
 }
 
 
 public func commentSample(){
+    //this is a comment
     //simple line comment
     let i = Int32(16)
     
     print(i)
     
+    /* This is also a comment
+    but is written over multiple lines. */
+    print("comment multiple lines")
+    
+    /* This is the start of the first multiline comment.
+        /* This is the second, nested multiline comment. */
+    This is the end of the first multiline comment. */
     
     
 }
@@ -158,6 +177,8 @@ func greet(person: String, day: String) -> String {
 
 /// Struct Sample use SimpleStructure and SimpleClass
 public func structSample() {
+    startSample(functionName: "structSample")
+    
     //simpleClass implement ExampleProtocol
     let simple = SimpleClass()
     simple.adjust()
@@ -174,4 +195,6 @@ public func structSample() {
 
     // Prints "The number 7"
     print(7.simpleDescription)
+    
+    endSample(functionName: "structSample")
 }

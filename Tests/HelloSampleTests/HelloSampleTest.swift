@@ -38,7 +38,13 @@ struct HelloSampleTest {
         let sum = AlgoSample.AddTwo(x:1,y:2)
         
         print("sum:",sum)
+        
+        #expect(sum==3,"sum is not equal 3")
     
+    }
+    
+    @Test func subscriptSampleTest() async throws{
+        BasicSample.subscriptSample()
     }
 
 }

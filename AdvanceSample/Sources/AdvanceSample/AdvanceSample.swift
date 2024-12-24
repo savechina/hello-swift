@@ -32,4 +32,6 @@ public func jsonSample() {
 
     //
     print("SwiftyJSON.JSON:", result)
+    
+//    endSample(functionName: "structSample")
 }
