@@ -13,6 +13,7 @@ let package = Package(
             url: "https://github.com/apple/swift-algorithms.git", from: "1.2.0"),
         .package(url: "https://github.com/apple/swift-numerics", from: "1.0.0"),
         .package(path: "./AdvanceSample"),
+        .package(path: "./AwesomeSample"),
         .package(path: "./LeetCodeSample"),
     ],
     targets: [
@@ -35,6 +36,7 @@ let package = Package(
                 .product(
                     name: "Algorithms", package: "swift-algorithms"),
                 .product(name: "AdvanceSample", package: "AdvanceSample"),
+                .product(name: "AwesomeSample", package: "AwesomeSample"),
                 .product(name: "LeetCodeSample", package: "LeetCodeSample"),
                 "BasicSample", "AlgoSample",
             ]
