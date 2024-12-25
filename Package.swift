@@ -5,6 +5,10 @@ import PackageDescription
 
 let package = Package(
     name: "hello-swift",
+    platforms: [
+        .macOS(.v13),  // 支持 macOS 13 及更高版本
+        .iOS(.v13),  // 支持 iOS 13 及更高版本
+    ],
     dependencies: [
         .package(
             url: "https://github.com/apple/swift-argument-parser.git",
@@ -12,6 +16,7 @@ let package = Package(
         .package(
             url: "https://github.com/apple/swift-algorithms.git", from: "1.2.0"),
         .package(url: "https://github.com/apple/swift-numerics", from: "1.0.0"),
+        .package(url: "https://github.com/apple/swift-log.git", from: "1.0.0"),
         .package(path: "./AdvanceSample"),
         .package(path: "./AwesomeSample"),
         .package(path: "./LeetCodeSample"),
@@ -20,7 +25,9 @@ let package = Package(
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
 
-        .target(name: "BasicSample"),
+        .target(
+            name: "BasicSample",
+            dependencies: [.product(name: "Logging", package: "swift-log")]),
         .target(
             name: "AlgoSample",
             dependencies: [

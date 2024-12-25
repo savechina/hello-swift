@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  ClassSample.swift
 //  hello-swift
 //
 //  Created by RenYan Wei on 2024/12/25.
