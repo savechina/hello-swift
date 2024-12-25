@@ -9,9 +9,12 @@ import ArgumentParser
 import BasicSample
 import Foundation
 
-enum SampleType: String, CaseIterable {
+enum SampleModule: String, CaseIterable {
     case BasicSample
     case AdvanceSample
+    case AwesomeSample
+    case AlgoSample
+    case LeetCodeSample
 }
 
 @main
@@ -19,11 +22,13 @@ struct HelloSample: ParsableCommand {
     mutating func run() throws {
         print("Hello, world!")
 
-        for sample in SampleType.allCases {
+        for sample in SampleModule.allCases {
             print("SampleType:", sample)
         }
+        
+//        AdvanceSample
 
-        print("SampleType.AdvanceSample:", SampleType.AdvanceSample.rawValue)
+        print("SampleType.AdvanceSample:", SampleModule.AdvanceSample.rawValue)
 
         //BasicSample
         print("--- basic sample start ... ---")

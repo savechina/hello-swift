@@ -226,34 +226,7 @@ public func subscriptSample() {
     var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
     numberOfLegs["bird"] = 2
 
-    //define Matrix
-    struct Matrix {
-        let rows: Int, columns: Int
-        var grid: [Double]
-        init(rows: Int, columns: Int) {
-            self.rows = rows
-            self.columns = columns
-            grid = Array(repeating: 0.0, count: rows * columns)
-        }
-        func indexIsValid(row: Int, column: Int) -> Bool {
-            return row >= 0 && row < rows && column >= 0 && column < columns
-        }
-        subscript(row: Int, column: Int) -> Double {
-            get {
-                assert(
-                    indexIsValid(row: row, column: column), "Index out of range"
-                )
-                return grid[(row * columns) + column]
-            }
-            set {
-                assert(
-                    indexIsValid(row: row, column: column), "Index out of range"
-                )
-                grid[(row * columns) + column] = newValue
-            }
-        }
-    }
-
+    //Matrix
     var matrix = Matrix(rows: 2, columns: 2)
     print("matrix:", matrix)
 
@@ -376,97 +349,6 @@ public func functionSample() {
 
 }
 
-//Base Shape class
-class Shape {
-    var description: String {
-        "Shape"
-    }
-
-    var area: Double { 0.0 }
-}
-// Rectangle subclass
-class Rectangle: Shape {
-    var width: Double
-    var height: Double
-
-    init(width: Double, height: Double) {
-
-        self.width = width
-        self.height = height
-    }
-
-    // 计算属性：area 的 getter
-    override var area: Double {
-        get {
-            return width * height
-        }
-        set(newArea) {
-            // 当设置 area 时，重新计算 width 和 height
-            height = newArea / width
-        }
-    }
-
-    override var description: String { "Rectangle" }
-}
-
-/// Circle subclass
-class Circle: Shape {
-    var radius: Double
-
-    init(radius: Double) {
-        self.radius = radius
-    }
-
-    // 只读计算属性
-    override var area: Double {
-        return .pi * radius * radius
-    }
-
-    override var description: String { "Rectangle" }
-}
-
-/// BlackjackCard and Nested Type structure
-struct BlackjackCard {
-
-    // nested Suit enumeration
-    enum Suit: Character {
-        case spades = "♠"
-        case hearts = "♡"
-        case diamonds = "♢"
-        case clubs = "♣"
-    }
-
-    // nested Rank enumeration
-    enum Rank: Int {
-        case two = 2
-        case three, four, five, six, seven, eight, nine, ten
-        case jack, queen, king, ace
-        struct Values {
-            let first: Int, second: Int?
-        }
-        var values: Values {
-            switch self {
-            case .ace:
-                return Values(first: 1, second: 11)
-            case .jack, .queen, .king:
-                return Values(first: 10, second: nil)
-            default:
-                return Values(first: self.rawValue, second: nil)
-            }
-        }
-    }
-
-    // BlackjackCard properties and methods
-    let rank: Rank, suit: Suit
-    var description: String {
-        var output = "suit is \(suit.rawValue),"
-        output += " value is \(rank.values.first)"
-        if let second = rank.values.second {
-            output += " or \(second)"
-        }
-        return output
-    }
-}
 
 public func classSample() {
     startSample(functionName: "DatatypeSample classSample")
@@ -488,6 +370,47 @@ public func classSample() {
 
     let circle = Circle(radius: 5)
     print("Circle area:", circle.area)  // 使用 getter，输出圆的面积
+    
+    //Class 继承 类型检查
+    let library = [
+        Movie(name: "Casablanca", director: "Michael Curtiz"),
+        Song(name: "Blue Suede Shoes", artist: "Elvis Presley"),
+        Movie(name: "Citizen Kane", director: "Orson Welles"),
+        Song(name: "The One And Only", artist: "Chesney Hawkes"),
+        Song(name: "Never Gonna Give You Up", artist: "Rick Astley")
+    ]
+    // the type of "library" is inferred to be [MediaItem]
+
+    var movieCount = 0
+    var songCount = 0
+
+
+    for item in library {
+        if item is Movie {
+            movieCount += 1
+        } else if item is Song {
+            songCount += 1
+        }
+    }
+
+
+    print("Media library contains \(movieCount) movies and \(songCount) songs")
+    // Prints "Media library contains 2 movies and 3 songs"
+    
+    for item in library {
+        if let movie = item as? Movie {
+            print("Movie: \(movie.name), dir. \(movie.director)")
+        } else if let song = item as? Song {
+            print("Song: \(song.name), by \(song.artist)")
+        }
+    }
+
+    // Movie: Casablanca, dir. Michael Curtiz
+    // Song: Blue Suede Shoes, by Elvis Presley
+    // Movie: Citizen Kane, dir. Orson Welles
+    // Song: The One And Only, by Chesney Hawkes
+    // Song: Never Gonna Give You Up, by Rick Astley
+    
     endSample(functionName: "DatatypeSample classSample")
 
 }
