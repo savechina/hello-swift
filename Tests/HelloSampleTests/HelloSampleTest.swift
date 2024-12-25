@@ -51,5 +51,9 @@ struct HelloSampleTest {
     @Test func classSampleTest() async throws {
         BasicSample.classSample()
     }
+    
+    @Test func enumsSampleTest() async throws {
+        BasicSample.enumsSample()
+    }
 
 }

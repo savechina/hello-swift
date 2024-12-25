@@ -491,3 +491,101 @@ public func classSample() {
     endSample(functionName: "DatatypeSample classSample")
 
 }
+
+public func enumsSample() {
+    startSample(functionName: "DatatypeSample enumsSample")
+    
+    //simple enum
+    enum SampleType {
+        case basicSample
+        case advancedSample
+    }
+
+    // Example usage:
+
+    let mySample = SampleType.basicSample
+
+    switch mySample {
+    case .basicSample:
+        print("This is a basic sample.")
+    case .advancedSample:
+        print("This is an advanced sample.")
+    }
+
+    print(SampleType.advancedSample.hashValue)
+
+    // You can also add associated values to your enums:
+
+    enum SampleWithData {
+        case basicSample(String)  // Basic sample with a description
+        case advancedSample(Int, Double)  // Advanced sample with an ID and a value
+    }
+
+    let sample1 = SampleWithData.basicSample("Simple data processing")
+    let sample2 = SampleWithData.advancedSample(123, 3.14159)
+
+    switch sample1 {
+    case .basicSample(let description):
+        print("Basic sample: \(description)")
+    case .advancedSample(let id, let value):
+        print("Advanced sample: ID: \(id), Value: \(value)")
+    }
+
+    // or, for more concise syntax with Swift 5.7 and later:
+    switch sample2 {
+    case .basicSample(let description):
+        print("Basic sample: \(description)")
+    case let .advancedSample(id, value):
+        print("Advanced sample: ID: \(id), Value: \(value)")
+    }
+
+    // Even more concise with pattern matching and value binding:
+    switch sample2 {
+    case .basicSample(let description):
+        print("Basic sample: \(description)")
+    case .advancedSample(let id, let value):  // labeled tuple pattern matching
+        print("Advanced sample: ID: \(id), Value: \(value)")
+    }
+
+    //if you have specific needs for raw values (like for persistence)
+
+    enum SampleWithRawValue: String, CaseIterable {
+        case basicSample = "basic"
+        case advancedSample = "advanced"
+    }
+
+    let rawValue = SampleWithRawValue.basicSample.rawValue  // "basic"
+    let allCases = SampleWithRawValue.allCases  // [.basicSample, .advancedSample]
+
+    if let sampleFromRaw = SampleWithRawValue(rawValue: "advanced") {
+        print("Created sample from raw value: \(sampleFromRaw)")  //prints: Created sample from raw value: advancedSample
+    }
+
+    //For Integer raw values
+
+    enum IntEnum: Int, CaseIterable {
+        case one = 1
+        case two = 2
+        case three = 3
+    }
+
+    print(IntEnum.two.rawValue)  //prints 2
+
+    //If you don't assign raw values, Swift will automatically assign them starting from 0 (if Int) or the case name(if String)
+
+    enum ImplicitRawValues: Int, CaseIterable {
+        case first  // 0
+        case second  // 1
+        case third  // 2
+    }
+
+    enum ImplicitStringRawValues: String, CaseIterable {
+        case first  // "first"
+        case second  // "second"
+    }
+
+    print(ImplicitRawValues.first.rawValue)  //prints 0
+    print(ImplicitStringRawValues.second.rawValue)  //prints "second"
+
+    endSample(functionName: "DatatypeSample enumsSample")
+}
