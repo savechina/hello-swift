@@ -5,10 +5,10 @@ import PackageDescription
 
 let package = Package(
     name: "hello-swift",
-    platforms: [
-        .macOS(.v13),  // 支持 macOS 13 及更高版本
-        .iOS(.v13),  // 支持 iOS 13 及更高版本
-    ],
+    //    platforms: [
+    //        .macOS(.v13),  // 支持 macOS 13 及更高版本
+    //        .iOS(.v13),  // 支持 iOS 13 及更高版本
+    //    ],
     dependencies: [
         .package(
             url: "https://github.com/apple/swift-argument-parser.git",
@@ -17,6 +17,9 @@ let package = Package(
             url: "https://github.com/apple/swift-algorithms.git", from: "1.2.0"),
         .package(url: "https://github.com/apple/swift-numerics", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-log.git", from: "1.0.0"),
+        .package(
+            url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git",
+            from: "2.0.0"),
         .package(path: "./AdvanceSample"),
         .package(path: "./AwesomeSample"),
         .package(path: "./LeetCodeSample"),
@@ -27,7 +30,9 @@ let package = Package(
 
         .target(
             name: "BasicSample",
-            dependencies: [.product(name: "Logging", package: "swift-log")]),
+            dependencies: [
+                .product(name: "Logging", package: "swift-log"), "SwiftyBeaver",
+            ]),
         .target(
             name: "AlgoSample",
             dependencies: [

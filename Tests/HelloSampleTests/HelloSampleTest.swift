@@ -19,9 +19,7 @@ struct HelloSampleTest {
         BasicSample.conditionSample()
 
         BasicSample.stringSample()
-        
-        BasicSample.loggerSample()
-
+   
     }
 
     @Test func collectionSampleTest() async throws {
@@ -56,6 +54,15 @@ struct HelloSampleTest {
     
     @Test func enumsSampleTest() async throws {
         BasicSample.enumsSample()
+    }
+    
+    
+    @Test func loggerSampleTest() async throws {
+
+        BasicSample.loggerOSLogSample()
+        
+        BasicSample.loggingSample()
+
     }
 
 }
