@@ -62,6 +62,8 @@ struct HelloSampleTest {
         BasicSample.loggerOSLogSample()
         
         BasicSample.loggingSample()
+        
+        BasicSample.logBeaverSample()
 
     }
 
