@@ -6,18 +6,19 @@
 //
 
 import Foundation
-public func startSample(functionName:String){
+
+public func startSample(functionName: String) {
     print("---- basic \(functionName) ...start ----")
 }
 
-public func endSample(functionName:String){
+public func endSample(functionName: String) {
     print("---- basic \(functionName) ...end ----\n")
 }
 
 /// basic express sample
 public func expressionSample() {
     startSample(functionName: "expressionSample")
-    
+
     //define variable number
     var n = 42
     n = 50
@@ -35,7 +36,7 @@ public func expressionSample() {
     let widthLabel = label + String(width)
 
     print(widthLabel)
-    
+
     endSample(functionName: "expressionSample")
 }
 
@@ -111,59 +112,57 @@ public func stringSample() {
     let result = greet(person: "Bob", day: "Tuesday")
 
     print(result)
-    
-    let quotation = """
-    The White Rabbit put on his spectacles.  "Where shall I begin,
-    please your Majesty?" he asked.
 
-    "Begin at the beginning," the King said gravely, "and go on
-    till you come to the end; then stop."
-    """
-    
+    let quotation = """
+        The White Rabbit put on his spectacles.  "Where shall I begin,
+        please your Majesty?" he asked.
+
+        "Begin at the beginning," the King said gravely, "and go on
+        till you come to the end; then stop."
+        """
+
     print(quotation)
-    
-    var emptyString = ""               // empty string literal
-    var anotherEmptyString = String()  // initializer syntax
+
+    let emptyString = ""  // empty string literal
+    let anotherEmptyString = String()  // initializer syntax
     // these two strings are both empty, and are equivalent to each other
-    
-    
+
     if emptyString.isEmpty {
         print("Nothing to see here")
     }
     // Prints "Nothing to see here"
-    
-    
+
+    print("compare emptyString", emptyString == anotherEmptyString)
+
     var variableString = "Horse"
     variableString += " and carriage"
     // variableString is now "Horse and carriage"
 
-
     let constantString = "Highlander"
-//    constantString += " and another Highlander"
+    //    constantString += " and another Highlander"
     // this reports a compile-time error - a constant string cannot be modified
-    
+
+    print("constantString", constantString)
 
     print("----basic string sample end.----\n")
 
 }
 
-
-public func commentSample(){
+public func commentSample() {
     //this is a comment
     //simple line comment
     let i = Int32(16)
-    
+
     print(i)
-    
+
     /* This is also a comment
     but is written over multiple lines. */
     print("comment multiple lines")
-    
+
     /* This is the start of the first multiline comment.
         /* This is the second, nested multiline comment. */
     This is the end of the first multiline comment. */
-    
-    
+
 }
 
 /// greet say hello
@@ -178,7 +177,7 @@ func greet(person: String, day: String) -> String {
 /// Struct Sample use SimpleStructure and SimpleClass
 public func structSample() {
     startSample(functionName: "structSample")
-    
+
     //simpleClass implement ExampleProtocol
     let simple = SimpleClass()
     simple.adjust()
@@ -195,6 +194,6 @@ public func structSample() {
 
     // Prints "The number 7"
     print(7.simpleDescription)
-    
+
     endSample(functionName: "structSample")
 }

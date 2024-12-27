@@ -349,7 +349,6 @@ public func functionSample() {
 
 }
 
-
 public func classSample() {
     startSample(functionName: "DatatypeSample classSample")
 
@@ -370,20 +369,19 @@ public func classSample() {
 
     let circle = Circle(radius: 5)
     print("Circle area:", circle.area)  // 使用 getter，输出圆的面积
-    
+
     //Class 继承 类型检查
     let library = [
         Movie(name: "Casablanca", director: "Michael Curtiz"),
         Song(name: "Blue Suede Shoes", artist: "Elvis Presley"),
         Movie(name: "Citizen Kane", director: "Orson Welles"),
         Song(name: "The One And Only", artist: "Chesney Hawkes"),
-        Song(name: "Never Gonna Give You Up", artist: "Rick Astley")
+        Song(name: "Never Gonna Give You Up", artist: "Rick Astley"),
     ]
     // the type of "library" is inferred to be [MediaItem]
 
     var movieCount = 0
     var songCount = 0
-
 
     for item in library {
         if item is Movie {
@@ -393,10 +391,9 @@ public func classSample() {
         }
     }
 
-
     print("Media library contains \(movieCount) movies and \(songCount) songs")
     // Prints "Media library contains 2 movies and 3 songs"
-    
+
     for item in library {
         if let movie = item as? Movie {
             print("Movie: \(movie.name), dir. \(movie.director)")
@@ -410,23 +407,27 @@ public func classSample() {
     // Movie: Citizen Kane, dir. Orson Welles
     // Song: The One And Only, by Chesney Hawkes
     // Song: Never Gonna Give You Up, by Rick Astley
-    
+
     endSample(functionName: "DatatypeSample classSample")
 
 }
 
 public func enumsSample() {
     startSample(functionName: "DatatypeSample enumsSample")
-    
+
     //simple enum
     enum SampleType {
         case basicSample
         case advancedSample
     }
 
-    // Example usage:
+    //获取SampleType 枚举类型
+    func fetchSampletype() -> SampleType {
+        return SampleType.basicSample
+    }
 
-    let mySample = SampleType.basicSample
+    // Example usage:
+    let mySample = fetchSampletype()
 
     switch mySample {
     case .basicSample:
@@ -479,6 +480,9 @@ public func enumsSample() {
 
     let rawValue = SampleWithRawValue.basicSample.rawValue  // "basic"
     let allCases = SampleWithRawValue.allCases  // [.basicSample, .advancedSample]
+
+    print("rawValue:", rawValue)
+    print("all Enum :", allCases)
 
     if let sampleFromRaw = SampleWithRawValue(rawValue: "advanced") {
         print("Created sample from raw value: \(sampleFromRaw)")  //prints: Created sample from raw value: advancedSample
