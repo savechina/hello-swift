@@ -4,7 +4,7 @@
 
 主要包括模块内容有以下：
 * HelloSample 模块， hello-swift 主工程模块。
-* BasicSample 模块，Swift 基础知识，变量、表达式，条件控制、类、结构体等基础应用的样例实现代码。
+* BasicSample 模块，是学习Swift一些基础编程概念相关知识，包括变量、表达式，条件控制、类、结构体等基础练习应用的样例代码。
 * AdvanceSample 模块，
 * AlgoSample 模块，
 * LeetCodeSample 模块，
@@ -17,7 +17,7 @@
 ## 基础
 
 ## 高级
-
+Advance Sample provides advanced example code for Swift programming.
 ## 算法
 
 ## LeetCode
