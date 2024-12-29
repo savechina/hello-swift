@@ -7,10 +7,14 @@
 
 import Foundation
 
+/// print  start sample tips
+/// - Parameter functionName: sample functionName
 public func startSample(functionName: String) {
     print("---- basic \(functionName) ...start ----")
 }
 
+/// print  end sample tips
+/// - Parameter functionName: sample functionName
 public func endSample(functionName: String) {
     print("---- basic \(functionName) ...end ----\n")
 }

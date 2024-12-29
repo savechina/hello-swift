@@ -26,7 +26,7 @@ struct HelloSample: ParsableCommand {
         commandName: "hello",
 
         // Optional abstracts and discussions are used for help output.
-        abstract: "A utility for performing maths.",
+        abstract: "A utility for learn swift example code.",
 
         // Commands can define a version for automatic '--version' support.
         version: "1.0.0",
@@ -90,8 +90,9 @@ extension HelloSample {
                 print("none")
             }
 
+            print("\nThis have some module:")
             for sample in SampleModule.allCases {
-                print("SampleType:", sample)
+                print("SampleModule:", sample)
             }
 
         }

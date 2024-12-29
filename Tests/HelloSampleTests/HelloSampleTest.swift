@@ -66,5 +66,13 @@ struct HelloSampleTest {
         BasicSample.logBeaverSample()
 
     }
+    
+    @Test func asyncSampleTest() async throws {
+
+       try BasicSample.asyncTaskSample()
+    
+    }
+    
+    
 
 }
