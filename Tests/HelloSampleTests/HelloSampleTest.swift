@@ -19,7 +19,7 @@ struct HelloSampleTest {
         BasicSample.conditionSample()
 
         BasicSample.stringSample()
-   
+
     }
 
     @Test func collectionSampleTest() async throws {
@@ -51,28 +51,31 @@ struct HelloSampleTest {
     @Test func classSampleTest() async throws {
         BasicSample.classSample()
     }
-    
+
     @Test func enumsSampleTest() async throws {
         BasicSample.enumsSample()
     }
-    
-    
+
     @Test func loggerSampleTest() async throws {
 
         BasicSample.loggerOSLogSample()
-        
+
         BasicSample.loggingSample()
-        
+
         BasicSample.logBeaverSample()
 
     }
-    
+
     @Test func asyncSampleTest() async throws {
 
-       try BasicSample.asyncTaskSample()
-    
+        try BasicSample.asyncTaskSample()
+
     }
-    
-    
+
+    @Test func simpleThreadSampleTest() async throws {
+
+        BasicSample.simpleThreadSample()
+
+    }
 
 }

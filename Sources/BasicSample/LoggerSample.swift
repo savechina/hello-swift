@@ -12,6 +12,8 @@ import SwiftyBeaver
 import os
 
 public func loggerOSLogSample() {
+    startSample(functionName: "LoggerSample loggerOSLogSample")
+
     //    OS Logger.
     if #available(macOS 11.0, *) {
         // 使用 Logger (macOS 11 及更高版本)
@@ -36,9 +38,14 @@ public func loggerOSLogSample() {
 
     //use os_log
     os_log("os logger print log")
+    
+    endSample(functionName: "LoggerSample loggerOSLogSample")
+
 }
 
 public func loggingSample() {
+    startSample(functionName: "LoggerSample loggingSample")
+
 
     //Logging log
     var logger = Logger(label: "logger handler")
@@ -73,9 +80,14 @@ public func loggingSample() {
     logger2.info("use BeaverHandler logging log an info  message")
     
     logger2.error("use BeaverHandler logging log an error message")
+    
+    endSample(functionName: "LoggerSample loggingSample")
+
 }
 
 public func logBeaverSample() {
+    startSample(functionName: "LoggerSample logBeaverSample")
+
 
     // 创建 SwiftyBeaver 实例 (确保在应用启动时初始化)
     let beaver = SwiftyBeaver.self
@@ -93,5 +105,6 @@ public func logBeaverSample() {
     beaver.addDestination(filelog)
 
     beaver.info("Beaver logging an info messang append log file.")
-
+    
+    endSample(functionName: "LoggerSample logBeaverSample")
 }
