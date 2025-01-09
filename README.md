@@ -1,5 +1,5 @@
 # hello-swift  您好，Swift ！
- 
+
 `hello-swift`，Swift编程语言学习的简明教程，主要是Swift编程语言的一些样例代码，为初学者提供快速上手学习Swift编程语言的基础知识样例代码，高级知识样例代码，还包括算法及相关框架库的应用样例代码。
 
 主要包括模块内容有以下：
@@ -12,7 +12,7 @@
 
 ## 快速上手
 
-[快速上手](https://github.com/savechina/hello-swift/blob/master/Docs/getting-started.md)
+[快速上手](https://github.com/savechina/hello-swift/blob/master/Docs/src/getting-started.md)
 
 ## 基础
 
@@ -22,4 +22,4 @@ Advance Sample provides advanced example code for Swift programming.
 
 ## LeetCode
 
-## Awesome 
+## Awesome
