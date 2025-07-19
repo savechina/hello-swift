@@ -4,3 +4,7 @@ language = "en"
 multilingual = false
 src = "src"
 title = "Hello Swift"
+
+[output.html]
+git-repository-url = "https://github.com/savechina/hello-swift"
+git-repository-icon = "fa-github"
