@@ -516,3 +516,51 @@ public func enumsSample() {
 
     endSample(functionName: "DatatypeSample enumsSample")
 }
+
+@available(macOS 13.0, *)
+public func datatimeSample() {
+    //ContinuousClock 计算执行时间
+    let clock = ContinuousClock()
+    let start = clock.now
+
+    //1. 获取基础时间对象
+    let now = Date()
+    print(now)  // 输出类似: 2025-12-22 13:00:00 +0000 (UTC时间)
+
+    //2. 格式化为本地字符串 (常用)
+    // 2025年最推荐的简洁写法
+    let timestamp = Date().formatted(date: .numeric, time: .standard)
+    print(timestamp)  // 例如: 2025/12/22 21:00:00
+
+    // 自定义格式 (使用 Date.FormatStyle)
+    let customTime = Date().formatted(
+        .dateTime.year().month().day().hour().minute()
+    )
+    print(customTime)
+
+    //3. 获取特定的时间部分 (年、月、日、周)
+    let calendar = Calendar.current
+    let components = calendar.dateComponents(
+        [.year, .month, .day, .hour, .minute],
+        from: Date()
+    )
+
+    if let year = components.year, let month = components.month {
+        print("当前是 \(year) 年 \(month) 月")
+    }
+
+    //4. 获取 Unix 时间戳 (秒/毫秒)
+    let timeInterval = Date().timeIntervalSince1970  // 返回 Double (秒)
+    let millisecond = Int(timeInterval * 1000)  // 毫秒戳
+    print("Unix 时间戳: \(Int(millisecond))")
+
+    // 执行某些任务...
+
+    let elapsed = clock.now - start
+    print("耗时: \(elapsed)")
+
+    let start2 = CFAbsoluteTimeGetCurrent()
+    // 执行任务...
+    let duration = CFAbsoluteTimeGetCurrent() - start2
+    print("大约耗时: \(duration) 秒")
+}

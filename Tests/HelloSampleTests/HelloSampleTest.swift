@@ -31,6 +31,14 @@ struct HelloSampleTest {
         BasicSample.dictionarySample()
     }
 
+    @Test func datatimeSampleTest() async throws {
+        BasicSample.datatimeSample()
+    }
+
+    @Test func structSampleTest() async throws {
+        BasicSample.structSample()
+    }
+
     @Test func simpleAddTest() async throws {
         let sum = AlgoSample.AddTwo(x: 1, y: 2)
 
@@ -75,6 +83,20 @@ struct HelloSampleTest {
     @Test func simpleThreadSampleTest() async throws {
 
         BasicSample.simpleThreadSample()
+
+    }
+
+    @Test func actorSampleTest() async throws {
+
+        await BasicSample.actorSample()
+
+        await BasicSample.batchAcotrSample()
+
+    }
+
+    @Test func asyncStreamSampleTest() async throws {
+
+        try await BasicSample.asyncStreamSample()
 
     }
 
