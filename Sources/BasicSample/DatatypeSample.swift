@@ -5,6 +5,7 @@
 //  Created by RenYan Wei on 2024/12/23.
 //
 
+import CryptoKit
 import Foundation
 
 public func collectionSample() {
@@ -519,6 +520,9 @@ public func enumsSample() {
 
 @available(macOS 13.0, *)
 public func datatimeSample() {
+
+    startSample(functionName: "DatatypeSample datatimeSample")
+
     //ContinuousClock 计算执行时间
     let clock = ContinuousClock()
     let start = clock.now
@@ -563,4 +567,117 @@ public func datatimeSample() {
     // 执行任务...
     let duration = CFAbsoluteTimeGetCurrent() - start2
     print("大约耗时: \(duration) 秒")
+
+    endSample(functionName: "DatatypeSample datatimeSample")
+
+}
+
+/// 简易实现 UUID v7
+extension UUID {
+    /// 优化后的 UUID v7 实现
+    static func v7() -> UUID {
+        // 使用简单的元组初始化
+        var bytes: uuid_t = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+        withUnsafeMutableBytes(of: &bytes) { ptr in
+            // 1. 获取毫秒级时间戳 (48位)
+            // 使用 Int64 转换并确保 Unix 时间戳正确
+            let timestamp = UInt64(Date().timeIntervalSince1970 * 1000)
+
+            ptr[0] = UInt8((timestamp >> 40) & 0xFF)
+            ptr[1] = UInt8((timestamp >> 32) & 0xFF)
+            ptr[2] = UInt8((timestamp >> 24) & 0xFF)
+            ptr[3] = UInt8((timestamp >> 16) & 0xFF)
+            ptr[4] = UInt8((timestamp >> 8) & 0xFF)
+            ptr[5] = UInt8(timestamp & 0xFF)
+
+            // 2. 填充随机数
+            // 移除赋值操作，直接调用循环
+            for i in 6...15 {
+                ptr[i] = UInt8.random(in: 0...255)
+            }
+
+            // 3. 设置版本号 7 (位格式：0111xxxx)
+            // 修正：ptr[6] 是时间戳的一部分和版本号的混合位
+            ptr[6] = (ptr[6] & 0x0F) | 0x70
+
+            // 4. 设置变体 (位格式：10xxxxxx)
+            ptr[8] = (ptr[8] & 0x3F) | 0x80
+        }
+
+        return UUID(uuid: bytes)
+    }
+
+    /// 快速实现 UUID v3 (基于命名空间和名称的 MD5 哈希)
+    @available(macOS 10.15, *)
+    static func v3(namespace: UUID, name: String) -> UUID {
+        // 1. 将命名空间的 UUID 字节与名称的 UTF8 数据合并
+        var data = Data()
+        // 提取命名空间的 16 字节
+        let nsBytes = withUnsafeBytes(of: namespace.uuid) { Data($0) }
+        data.append(nsBytes)
+        data.append(Data(name.utf8))
+
+        // 2. 计算 MD5 哈希 (16 字节)
+        let hash = Insecure.MD5.hash(data: data)
+        var bytes = Array(hash)
+
+        // 3. 设置版本号 (Version 3: 0011xxxx) -> 0x30
+        bytes[6] = (bytes[6] & 0x0F) | 0x30
+
+        // 4. 设置变体 (Variant: 10xxxxxx) -> 0x80
+        bytes[8] = (bytes[8] & 0x3F) | 0x80
+
+        // 5. 将字节数组转换为 uuid_t 元组
+        let finalUUID: uuid_t = (
+            bytes[0], bytes[1], bytes[2], bytes[3],
+            bytes[4], bytes[5], bytes[6], bytes[7],
+            bytes[8], bytes[9], bytes[10], bytes[11],
+            bytes[12], bytes[13], bytes[14], bytes[15]
+        )
+
+        return UUID(uuid: finalUUID)
+    }
+}
+
+/// UUID Sample
+public func uuidSample() {
+    startSample(functionName: "DatatypeSample uuidSample")
+
+    //UUID V4
+    let uuid = UUID.init()
+
+    print("uuid: \(uuid.uuidString)")
+
+    // 这是一个手动定义的 UUID v5 (基于 SHA-1)
+    let v5String = "886313e1-3b8a-5372-9b90-0c9aee199e5d"
+    if let uuid2 = UUID(uuidString: v5String) {
+        print("uuid v5：\(uuid2)")
+    }
+
+    //UUID v7
+    let uuidv7: UUID = UUID.v7()
+    print("uuid v7: \(uuidv7.uuidString)")
+
+    //    在 RFC 4122 中定义了四个常用的命名空间 UUID：
+    //    DNS: 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+    //    URL: 6ba7b811-9dad-11d1-80b4-00c04fd430c8
+    //    OID: 6ba7b812-9dad-11d1-80b4-00c04fd430c8
+    //    X.500: 6ba7b814-9dad-11d1-80b4-00c04fd430c8
+
+    if #available(macOS 10.15, *) {
+        // 官方预定义的 DNS 命名空间 UUID: 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+        let dnsNamespace = UUID(
+            uuidString: "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
+        )!
+
+        // 为 "example.com" 生成确定性的 UUID v3
+        let uuidV3 = UUID.v3(namespace: dnsNamespace, name: "example.com")
+
+        print("UUID v3: \(uuidV3.uuidString.lowercased())")
+        // 预期输出: 9073926b-929f-36c2-9394-b152d2f7f984
+    }
+
+    endSample(functionName: "DatatypeSample uuidSample")
+
 }

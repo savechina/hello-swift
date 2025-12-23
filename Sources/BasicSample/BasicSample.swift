@@ -41,6 +41,14 @@ public func expressionSample() {
 
     print(widthLabel)
 
+    let name = "world"
+    if name == "world" {
+        print("hello, world")
+    } else {
+        print("I'm sorry \(name), but I don't recognize you")
+    }
+    // Prints "hello, world", because name is indeed equal to "world".
+
     endSample(functionName: "expressionSample")
 }
 
@@ -98,7 +106,19 @@ public func conditionSample() {
         }
     }
     print("for teamScore", teamScore)
+
+    //For-In Loops Dictionary
+    let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
+    for (animalName, legCount) in numberOfLegs {
+        print("\(animalName)s have \(legCount) legs")
+    }
+
+    //for range
+    for index in 1...5 {
+        print("\(index) times 5 is \(index * 5)")
+    }
 }
+
 
 /// basic string sample
 public func stringSample() {

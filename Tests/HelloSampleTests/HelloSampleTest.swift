@@ -22,6 +22,18 @@ struct HelloSampleTest {
 
     }
 
+    @Test func expressionSampleTest() async throws {
+
+        //
+        BasicSample.earlyExitSample()
+
+        //defer statement
+        BasicSample.deferSample()
+
+        BasicSample.availabilitySample()
+
+    }
+
     @Test func collectionSampleTest() async throws {
 
         BasicSample.collectionSample()
@@ -98,6 +110,11 @@ struct HelloSampleTest {
 
         try await BasicSample.asyncStreamSample()
 
+    }
+
+    @Test func uuidSampleTest() async throws {
+
+        BasicSample.uuidSample()
     }
 
 }

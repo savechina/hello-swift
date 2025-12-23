@@ -129,6 +129,8 @@ public func simpleThreadSample() {
 
 @available(macOS 13.0, *)
 public func actorSample() async {  // 1. 函数声明为 async，以便在内部使用 await
+    startSample(functionName: "actorSample")
+
     actor Counter {
         private var value = 0
 
@@ -153,6 +155,8 @@ public func actorSample() async {  // 1. 函数声明为 async，以便在内部
     let finalValue = await task.value
 
     print("counter 最终结果: \(finalValue)")
+
+    endSample(functionName: "actorSample")
 }
 
 @available(macOS 13.0, *)
@@ -169,7 +173,7 @@ actor BatchCounter {
 }
 
 @available(macOS 13.0, *)
-func runMassiveParallelCalculation() async {
+func runParallelCalculation() async {
     let counter = BatchCounter()
     let totalTasks = 1_000_000
 
@@ -204,13 +208,16 @@ func runMassiveParallelCalculation() async {
 
 @available(macOS 13.0, *)
 public func batchAcotrSample() async {
+    startSample(functionName: "batchAcotrSample")
+
     // 调用计算任务
     let handle = Task {
-        await runMassiveParallelCalculation()
+        await runParallelCalculation()
     }
 
     await handle.value
 
+    endSample(functionName: "batchAcotrSample")
 }
 
 /// 传感器异步任务流
@@ -258,6 +265,8 @@ class SensorManager {
 
 @available(macOS 13.0, *)
 public func asyncStreamSample() async throws {
+    startSample(functionName: "asyncStreamSample")
+
     // --- 消费端 ---
     let handler = Task {
         let manager = SensorManager()
@@ -275,4 +284,6 @@ public func asyncStreamSample() async throws {
     }
 
     await handler.value
+
+    endSample(functionName: "asyncStreamSample")
 }
