@@ -27,4 +27,8 @@ struct AdvanceSampleTest {
         AdvanceSample.temporaryFileSample()
     }
 
+    @Test func metricsDataServiceSampleTest() async throws {
+        await AdvanceSample.metricsDataServiceSample()
+    }
+
 }
