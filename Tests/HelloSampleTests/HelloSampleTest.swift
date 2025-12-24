@@ -5,8 +5,10 @@
 //  Created by RenYan Wei on 2024/12/18.
 //
 
+import AdvanceSample
 import AlgoSample
 import BasicSample
+import Foundation
 import HelloSample
 import Testing
 
@@ -116,5 +118,6 @@ struct HelloSampleTest {
 
         BasicSample.uuidSample()
     }
+
 
 }

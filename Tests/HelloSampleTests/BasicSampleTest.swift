@@ -1,0 +1,72 @@
+//
+//  BasicSampleTest.swift
+//  hello-swift
+//
+//  Created by weirenyan on 2025/12/24.
+//
+
+import BasicSample
+import Foundation
+import Testing
+
+struct BasicSampleTest {
+
+    @Test func sampleTest() async throws {
+        print("advance sample test")
+        #expect(1 == 1)
+    }
+
+    @Test("VisibleSample 验证同模块可见性")
+    func testInternalAccessVisibleSample() async throws {
+        let account = BasicSample.BankAccount(initialDeposit: 100.0)
+
+        // ✅ 访问 Public 属性
+        #expect(account.balance == 100.0)
+
+        // ❌ 访问 Internal 属性 (默认级别)
+        // 在同一个 Target 内，auditFlag 是可见的
+        //account.internalAuditFlag = true
+        //#expect(account.internalAuditFlag == true)
+
+        // ❌ 编译错误：无法访问 private 成员
+        // account.transactionPIN = 1234
+
+        // ❌ 编译错误：无法访问 fileprivate 成员 (除非测试代码和类写在同一个 .swift 文件里)
+        // print(account.fileSystemKey)
+    }
+
+    @Test("VisibleSample 验证 Public 与 Private Set")
+    func testPublicInterfaceVisibleSample() async throws {
+        let account = BankAccount(initialDeposit: 50.0)
+
+        // ✅ 正常调用 Public 方法
+        account.deposit(amount: 50.0)
+
+        // ✅ 读取 Public 属性
+        #expect(account.balance == 100.0)
+
+        // ❌ 编译错误：虽然能读，但不能从外部写，因为定义了 private(set)
+        // account.balance = 200.0
+    }
+
+    @Test("VisibleSample 验证 Extension 提供的功能")
+    func testPINResetVisibleSample() async throws {
+        let account = BankAccount(initialDeposit: 0)
+
+        // ✅ 通过 Public Extension 方法修改 Private 成员
+        let success = account.resetPIN(oldPIN: 8888, newPIN: 1234)
+        #expect(success == true)
+    }
+
+    @Test func testVisibaleVerifySample() async throws {
+        visibaleVerifySample()
+    }
+
+    @Test func testModuleSample() async throws {
+
+        MyModule.Network.HTTP.get("https://apple.com")
+        MyModule.Model.User.get("Wee")
+        MyModule.Storage.Local.save()
+    }
+
+}

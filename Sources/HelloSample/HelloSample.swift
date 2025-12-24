@@ -5,7 +5,9 @@
 // https://swiftpackageindex.com/apple/swift-argument-parser/documentation
 
 import AdvanceSample
+import AlgoSample
 import ArgumentParser
+import AwesomeSample
 import BasicSample
 import Foundation
 
@@ -35,8 +37,8 @@ struct HelloSample: ParsableCommand {
         // With language support for type-level introspection, this could be
         // provided by automatically finding nested `ParsableCommand` types.
         subcommands: [
-            HelloInfo.self, BasicCommand.self, AdvanceCommand.self,
-            AlgoCommand.self,
+            InfoCommand.self, BasicCommand.self, AdvanceCommand.self,
+            AwesomeCommand.self, AlgoCommand.self,
         ]
 
         // A default subcommand, when provided, is automatically selected if a
@@ -48,11 +50,13 @@ struct HelloSample: ParsableCommand {
 
 extension HelloSample {
 
-    struct HelloInfo: ParsableCommand {
+    struct InfoCommand: ParsableCommand {
 
         static let configuration =
             CommandConfiguration(
-                commandName: "info", abstract: "Print the info of the Samples.")
+                commandName: "info",
+                abstract: "Print the info of the Samples."
+            )
 
         //        // The `@OptionGroup` attribute includes the flags, options, and
         //        // arguments defined by another `ParsableArguments` type.
@@ -79,11 +83,17 @@ extension HelloSample {
             case .BasicSample:
                 print("BasicSample is learn basic Swift example code.")
             case .some(.AdvanceSample):
-                print("AdvanceSample provides advanced example code for Swift programming.")
+                print(
+                    "AdvanceSample provides advanced example code for Swift programming."
+                )
             case .some(.AwesomeSample):
-                print("AwesomeSample")
+                print(
+                    "AwesomeSample is some awesome library and tool for Swift programming."
+                )
             case .some(.AlgoSample):
-                print("AlgoSample")
+                print(
+                    "AlgoSample is some algo example code for Swift programming."
+                )
             case .some(.LeetCodeSample):
                 print("LeetCodeSample")
             case .none:
@@ -92,7 +102,7 @@ extension HelloSample {
 
             print("\nThis have some module:")
             for sample in SampleModule.allCases {
-                print("SampleModule:", sample)
+                print("SampleModule:\(sample),name:\(sample.rawValue)")
             }
 
         }
@@ -101,18 +111,18 @@ extension HelloSample {
 
     struct BasicCommand: ParsableCommand {
         static let configuration = CommandConfiguration(
-            commandName: "basic", abstract: "the BasicSample of the Samples.")
+            commandName: "basic",
+            abstract: "the BasicSample of the Samples."
+        )
 
         func run() throws {
 
             //BasicSample
             print("--- basic sample start ... ---")
 
-            expressionSample()
-
-            stringSample()
-
-            structSample()
+            
+            
+            basicSample()
 
             print("--- basic sample end . ---\n")
         }
@@ -121,12 +131,14 @@ extension HelloSample {
     struct AdvanceCommand: ParsableCommand {
         static let configuration = CommandConfiguration(
             commandName: "advance",
-            abstract: "the AdvanceSample of the Samples.")
+            abstract: "the AdvanceSample of the Samples."
+        )
 
         func run() throws {
             //AdvanceSample
             print(
-                "SampleType.AdvanceSample:", SampleModule.AdvanceSample.rawValue
+                "SampleType.AdvanceSample:",
+                SampleModule.AdvanceSample.rawValue
             )
 
             //AdvanceSample
@@ -134,15 +146,55 @@ extension HelloSample {
 
             AdvanceSample.advanceSample()
 
-            AdvanceSample.jsonSample()
+            //            AdvanceSample.jsonSample()
+
             print("--- advance sample end . ---\n")
+        }
+    }
+
+    struct AwesomeCommand: ParsableCommand {
+        static let configuration = CommandConfiguration(
+            commandName: "awesome",
+            abstract: "the AwesomeSample of the Samples."
+        )
+        func run() throws {
+            //AdvanceSample
+            print(
+                "SampleType.AwesomeSample:",
+                SampleModule.AwesomeSample.rawValue
+            )
+
+            //AdvanceSample
+            print("--- awesome sample start ... ---")
+
+            awesomeSample()
+
+            print("--- awesome sample end . ---\n")
         }
     }
 
     struct AlgoCommand: ParsableCommand {
         static let configuration = CommandConfiguration(
             commandName: "algo",
-            abstract: "the AlgoSample of the Samples.")
+            abstract: "the AlgoSample of the Samples."
+        )
+
+        func run() throws {
+            //AdvanceSample
+            print(
+                "SampleType.AlgoSample:",
+                SampleModule.AlgoSample.rawValue
+            )
+
+            //AdvanceSample
+            print("--- algo sample start ... ---")
+
+            let sum = AlgoSample.AddTwo(x: 3, y: 4)
+
+            print("sum:", sum)
+
+            print("--- algo sample end . ---\n")
+        }
     }
 
 }

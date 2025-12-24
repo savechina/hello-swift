@@ -19,6 +19,17 @@ public func endSample(functionName: String) {
     print("---- basic \(functionName) ...end ----\n")
 }
 
+public func basicSample() {
+
+    expressionSample()
+
+    stringSample()
+
+    structSample()
+
+    visibaleVerifySample()
+}
+
 /// basic express sample
 public func expressionSample() {
     startSample(functionName: "expressionSample")
@@ -118,7 +129,6 @@ public func conditionSample() {
         print("\(index) times 5 is \(index * 5)")
     }
 }
-
 
 /// basic string sample
 public func stringSample() {

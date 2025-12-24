@@ -3,14 +3,32 @@
 import Foundation
 import SwiftyJSON
 
+/// print  start sample tips
+/// - Parameter functionName: sample functionName
+public func startSample(functionName: String) {
+    print("---- advance \(functionName) ...start ----")
+}
+
+/// print  end sample tips
+/// - Parameter functionName: sample functionName
+public func endSample(functionName: String) {
+    print("---- advance \(functionName) ...end ----\n")
+}
+
 /// advanceSample
 public func advanceSample() {
     print("advance sample .first pods.")
+
+    jsonSample()
+
+    fileManagerPathSample()
+
+    temporaryFileSample()
 }
 
 /// jsonSample
 public func jsonSample() {
-
+    startSample(functionName: "jsonSample")
     //use JSONSerialization process json data
     let jsonString = "{\"name\":\"John\", \"age\":30}"
 
@@ -32,6 +50,6 @@ public func jsonSample() {
 
     //
     print("SwiftyJSON.JSON:", result)
-    
-//    endSample(functionName: "structSample")
+
+    endSample(functionName: "jsonSample")
 }
