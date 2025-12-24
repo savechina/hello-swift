@@ -12,7 +12,7 @@ public func advanceSample() {
 public func jsonSample() {
 
     //use JSONSerialization process json data
-    var jsonString = "{\"name\":\"John\", \"age\":30}"
+    let jsonString = "{\"name\":\"John\", \"age\":30}"
 
     let json = try! JSONSerialization.jsonObject(
         with: jsonString.data(using: .utf8)!,
@@ -23,7 +23,7 @@ public func jsonSample() {
 
     //use SwiftyJSON process json data
     //json data context
-    var jsonData = "{\"name\":\"John\", \"age\":30}"
+    let jsonData = "{\"name\":\"John\", \"age\":30}"
 
     print(jsonData)
 

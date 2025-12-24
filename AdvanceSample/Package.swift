@@ -13,7 +13,8 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "5.0.2")
+            url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "5.0.2"),
+        .package(url: "https://github.com/apple/swift-nio.git", .upToNextMajor(from: "2.92.0")),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.

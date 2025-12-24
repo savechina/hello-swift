@@ -20,6 +20,7 @@ let package = Package(
         .package(
             url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git",
             from: "2.0.0"),
+        .package(url: "https://github.com/apple/swift-collections.git", .upToNextMajor(from: "1.3.0")),
         .package(path: "./AdvanceSample"),
         .package(path: "./AwesomeSample"),
         .package(path: "./LeetCodeSample"),
@@ -32,6 +33,7 @@ let package = Package(
             name: "BasicSample",
             dependencies: [
                 .product(name: "Logging", package: "swift-log"), "SwiftyBeaver",
+                .product(name: "Collections", package: "swift-collections")
             ]),
         .target(
             name: "AlgoSample",
