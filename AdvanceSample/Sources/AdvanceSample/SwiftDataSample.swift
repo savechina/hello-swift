@@ -12,11 +12,13 @@ import SwiftData
 @available(macOS 14, *)
 @Model
 final class ServerLog {
+    var id: UUID
     var timestamp: Date
     var endpoint: String
     var responseCode: Int
 
     init(endpoint: String, responseCode: Int) {
+        self.id = UUID()
         self.timestamp = Date()
         self.endpoint = endpoint
         self.responseCode = responseCode
@@ -25,54 +27,71 @@ final class ServerLog {
 
 // 2. 编程式管理类（后端逻辑类）
 @available(macOS 14, *)
-@MainActor
 class LogService {
     let container: ModelContainer
     let context: ModelContext
 
-    init() throws {
-        // 配置存储路径（后端服务通常需要指定特定的数据库位置）
-
+    init() async throws {
         let tempDirectory = FileManager.default.temporaryDirectory
-
-        // 2. 构造临时数据库路径
-        // 建议增加一个随机后缀或特定名称，防止同一系统的不同进程冲突
         let databaseURL = tempDirectory.appendingPathComponent(
             "server_logs_\(UUID().uuidString).sqlite"
         )
-
         print("🚀 正在初始化临时数据库：\(databaseURL.path)")
 
-        // 3. 配置容器
-        // 对于临时存储，通常不需要 CloudKit 同步，设置 .none
         let config = ModelConfiguration(
             url: databaseURL,
             cloudKitDatabase: .none
         )
 
-        //        let fullPath = URL(fileURLWithPath: "/Users/shared/server_logs.store")
-        //        let config = ModelConfiguration(url: fullPath)
-
         self.container = try ModelContainer(
             for: ServerLog.self,
             configurations: config
         )
-        self.context = container.mainContext
+        self.context = ModelContext(container)
     }
 
-    func logRequest(path: String, code: Int) {
+    func logRequest(path: String, code: Int) async throws {
         let newLog = ServerLog(endpoint: path, responseCode: code)
         context.insert(newLog)
-        // 注意：后台服务通常需要手动 save，不像 SwiftUI 那样自动
-        try? context.save()
+        print("log request \(newLog.id)")
+        try await context.save()
     }
 
-    func fetchRecentLogs() -> [ServerLog] {
+    func fetchRecentLogs() async throws -> [ServerLog] {
         let descriptor = FetchDescriptor<ServerLog>(sortBy: [
             SortDescriptor(\.timestamp, order: .reverse)
         ])
-        return (try? context.fetch(descriptor)) ?? []
+        return try await context.fetch(descriptor)
     }
+}
+
+@available(macOS 14, *)
+public func logServicesSample() async {
+    startSample(functionName: "SwiftDataSample  logServicesSample")
+
+    do {
+        let logService = try await LogService()
+
+        print("log record request....")
+        try await logService.logRequest(path: "/index", code: 200)
+        try await logService.logRequest(path: "/status", code: 404)
+        try await logService.logRequest(path: "/home/list", code: 200)
+
+        let logs: [ServerLog] = try await logService.fetchRecentLogs()
+
+        print("fetch count: \(logs.count)")
+
+        for log in logs {
+            print(
+                "log: \(log.id), \(log.timestamp), \(log.endpoint),\(log.responseCode)"
+            )
+        }
+
+    } catch {
+        print("SwiftData LogService Error: \(error)")
+    }
+
+    endSample(functionName: "SwiftDataSample  logServicesSample")
 }
 
 // 1. 定义数据模型
@@ -165,7 +184,7 @@ public func metricsDataServiceSample() async {
             print("正在初始化数据库：\(databaseURL.path)")
 
             // 3. 显式配置容器路径
-//            let config = ModelConfiguration(url: databaseURL)
+            //            let config = ModelConfiguration(url: databaseURL)
 
             let config = ModelConfiguration(isStoredInMemoryOnly: true)
 

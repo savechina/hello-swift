@@ -57,7 +57,10 @@ let package = Package(
         ),
         .testTarget(
             name: "HelloSampleTests",
-            dependencies: [.target(name: "HelloSample")]
+            dependencies: [.target(name: "HelloSample")],
+            resources: [
+                .process("../../Config")
+            ]
         ),
 
         .testTarget(

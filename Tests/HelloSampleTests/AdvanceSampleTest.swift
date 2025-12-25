@@ -31,4 +31,16 @@ struct AdvanceSampleTest {
         await AdvanceSample.metricsDataServiceSample()
     }
 
+    @Test func logServicesSampleTest() async throws {
+        await AdvanceSample.logServicesSample()
+    }
+
+    @Test func systemeEnvSampleTest() async throws {
+        AdvanceSample.processInfoEnvSample()
+    }
+
+    @Test func dotenvySampleTest() async throws {
+        AdvanceSample.dotenvSample()
+    }
+
 }
