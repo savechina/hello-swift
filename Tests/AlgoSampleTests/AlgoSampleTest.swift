@@ -6,6 +6,7 @@
 //
 
 import AlgoSample
+import Foundation
 import Testing
 
 struct AlgoSampleTest {
@@ -19,7 +20,7 @@ struct AlgoSampleTest {
 
         print("multiply sum:", sum)
     }
-    
+
     @Test func testCalculatePiSample() async throws {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.
 
@@ -27,9 +28,37 @@ struct AlgoSampleTest {
 
         calculatePiSample()
 
-//        print("multiply sum:", sum)
+        //        print("multiply sum:", sum)
     }
-    
-    
+
+    @Test func testCalculatePiBPPSample() async throws {
+
+        print("test pi calculate ")
+
+        calculatePiBBPSample()
+    }
+
+    @Test func testCalculatePiBPPSampleOrder() async throws {
+        let steps = 11
+        let result = calculatePiBBPNormal(steps: steps)
+        print("迭代次数: \(steps)")
+        print("计算结果: \(result)")
+        print("系统标准: \(Double.pi)")
+        print("是否相等: \(result == Double.pi)")
+    }
+
+    @Test func testCalculatePiDecimal() async throws {
+        let steps = 35
+        let result = calculatePiDecimal(steps: steps)
+//
+//        let highPrecisionPi = calculatePiDecimal(steps: 35)
+//        print("Decimal 计算结果 (最多38位):")
+//        print(highPrecisionPi)
+
+        print("迭代次数: \(steps)")
+        print("计算结果: \(result)")
+        print("系统标准: \(Decimal.pi)")
+        print("是否相等: \(result == Decimal.pi)")
+    }
 
 }
