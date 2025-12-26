@@ -19,5 +19,17 @@ struct AlgoSampleTest {
 
         print("multiply sum:", sum)
     }
+    
+    @Test func testCalculatePiSample() async throws {
+        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+
+        print("test pi calculate ")
+
+        calculatePiSample()
+
+//        print("multiply sum:", sum)
+    }
+    
+    
 
 }

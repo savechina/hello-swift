@@ -49,3 +49,32 @@ public func AddThreeNumber(x: Int, y: Int, z: Int) -> Int {
 public func multiply<T: Numeric>(_ a: T, _ b: T) -> T {
     return a * b
 }
+
+
+/// 使用莱布尼茨公式计算 PI
+/// - Parameter steps: 迭代次数，次数越多越精确
+func calculatePi(steps: Int) -> Double {
+    var piOverFour: Double = 0.0
+    
+    for n in 0..<steps {
+        // 分母为 1, 3, 5, 7...
+        let denominator = Double(2 * n + 1)
+        // 符号交替发生变化
+        if n % 2 == 0 {
+            piOverFour += 1.0 / denominator
+        } else {
+            piOverFour -= 1.0 / denominator
+        }
+    }
+    
+    return piOverFour * 4.0
+}
+
+
+public func calculatePiSample(){
+    // 使用样例
+    let iterations = 10000_000_000
+    let result = calculatePi(steps: iterations)
+    print("迭代 \(iterations) 次的结果: \(result)")
+    print("系统标准 PI 值: \(Double.pi)")
+}
