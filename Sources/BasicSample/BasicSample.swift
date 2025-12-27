@@ -28,6 +28,10 @@ public func basicSample() {
     structSample()
 
     visibaleVerifySample()
+
+    moduleSample()
+    
+    moduleResourceSample()
 }
 
 /// basic express sample
@@ -230,4 +234,39 @@ public func structSample() {
     print(7.simpleDescription)
 
     endSample(functionName: "structSample")
+}
+
+func moduleSample() {
+    startSample(functionName: "moduleSample")
+
+    MyModule.Network.HTTP.get("https://apple.com")
+    MyModule.Model.User.get("Wee")
+    MyModule.Storage.Local.save()
+    endSample(functionName: "moduleSample")
+}
+
+func moduleResourceSample() {
+    startSample(functionName: "moduleResourceSample")
+
+    let execPath = executableDirectory()
+    
+    print("executableDirectory: \(execPath)")
+    
+    let rootPath = execPath.deletingLastPathComponent()
+    
+    print("rootPath: \(rootPath)")
+    
+    let resourcesPath = rootPath.appendingPathComponent("Resources")
+
+    print("resourcesPath: \(resourcesPath)")
+
+
+    endSample(functionName: "moduleResourceSample")
+}
+
+func executableDirectory() -> URL {
+    URL(fileURLWithPath: CommandLine.arguments[0])
+        .resolvingSymlinksInPath()
+        .standardized
+        .deletingLastPathComponent()
 }

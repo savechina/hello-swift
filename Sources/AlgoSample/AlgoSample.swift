@@ -9,6 +9,17 @@ import Algorithms
 import Foundation
 import Numerics
 
+//import BigInt
+
+public func algoSample() {
+
+    calculatePiSample()
+
+    calculatePiBBPSample()
+
+    calculatePiDecimalSample()
+}
+
 /// simple add ,calc two number sum
 /// 计算二个数之和
 /// - Parameters:
@@ -108,38 +119,38 @@ public func calculatePiBBPNormal(steps: Int) -> Double {
     return pi
 }
 
-
 public func calculatePiDecimal(steps: Int) -> Decimal {
     var pi: Decimal = 0
-    
+
     for k in 0..<steps {
         let k_d = Decimal(k)
-      
+
         // 1. 计算 16^-k (即 1 / 16^k)
-        var p16: Decimal = 1
         let sixteen = Decimal(16)
-        for _ in 0..<k {
-            p16 /= sixteen
-        }
-        
+        //        var p16: Decimal = 1
+        //        for _ in 0..<k {
+        //            p16 /= sixteen
+        //        }
+        let p16 = pow(sixteen, -k)
+
         // 2. 计算括号内的部分: [4/(8k+1) - 2/(8k+4) - 1/(8k+5) - 1/(8k+6)]
         let term1 = Decimal(4) / (Decimal(8) * k_d + 1)
         let term2 = Decimal(2) / (Decimal(8) * k_d + 4)
         let term3 = Decimal(1) / (Decimal(8) * k_d + 5)
         let term4 = Decimal(1) / (Decimal(8) * k_d + 6)
-        
+
         let bracket = term1 - term2 - term3 - term4
-        
+
         // 3. 累加
         pi += p16 * bracket
     }
-    
+
     return pi
 }
 
 public func calculatePiSample() {
     // 使用样例
-    let iterations = 10_000_000_000
+    let iterations = 1_000_000_000
     let result = calculatePi(steps: iterations)
     print("迭代 \(iterations) 次的结果: \(result)")
     print("系统标准 PI 值: \(Double.pi)")
@@ -151,4 +162,14 @@ public func calculatePiBBPSample() {
     let result = calculatePiBBP(steps: iterations)
     print("迭代 \(iterations) 次的结果: \(result)")
     print("系统标准 PI 值: \(Double.pi)")
+}
+
+func calculatePiDecimalSample() {
+    let steps = 35
+    let result = calculatePiDecimal(steps: steps)
+
+    print("迭代次数: \(steps)")
+    print("计算结果: \(result)")
+    print("系统标准: \(Decimal.pi)")
+    print("是否相等: \(result == Decimal.pi)")
 }

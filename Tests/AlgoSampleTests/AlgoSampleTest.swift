@@ -50,10 +50,6 @@ struct AlgoSampleTest {
     @Test func testCalculatePiDecimal() async throws {
         let steps = 35
         let result = calculatePiDecimal(steps: steps)
-//
-//        let highPrecisionPi = calculatePiDecimal(steps: 35)
-//        print("Decimal 计算结果 (最多38位):")
-//        print(highPrecisionPi)
 
         print("迭代次数: \(steps)")
         print("计算结果: \(result)")

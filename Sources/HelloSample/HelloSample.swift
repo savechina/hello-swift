@@ -120,8 +120,6 @@ extension HelloSample {
             //BasicSample
             print("--- basic sample start ... ---")
 
-            
-            
             basicSample()
 
             print("--- basic sample end . ---\n")
@@ -145,8 +143,6 @@ extension HelloSample {
             print("--- advance sample start ... ---")
 
             AdvanceSample.advanceSample()
-
-            //            AdvanceSample.jsonSample()
 
             print("--- advance sample end . ---\n")
         }
@@ -192,6 +188,8 @@ extension HelloSample {
             let sum = AlgoSample.AddTwo(x: 3, y: 4)
 
             print("sum:", sum)
+            
+            AlgoSample.algoSample()
 
             print("--- algo sample end . ---\n")
         }
