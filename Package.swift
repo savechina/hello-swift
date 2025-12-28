@@ -20,7 +20,8 @@ let package = Package(
         .package(
             url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git",
             from: "2.0.0"),
-        .package(url: "https://github.com/apple/swift-collections.git", .upToNextMajor(from: "1.3.0")),
+        .package(url: "https://github.com/apple/swift-collections.git", from: "1.3.0"),
+        .package(url: "https://github.com/dankogai/swift-bignum.git", from: "6.0.0"),
         .package(path: "./AdvanceSample"),
         .package(path: "./AwesomeSample"),
         .package(path: "./LeetCodeSample"),
@@ -41,6 +42,7 @@ let package = Package(
                 .product(
                     name: "Algorithms", package: "swift-algorithms"),
                 .product(name: "Numerics", package: "swift-numerics"),
+                .product(name: "BigNum", package:"swift-bignum")
             ]),
         .executableTarget(
             name: "HelloSample",

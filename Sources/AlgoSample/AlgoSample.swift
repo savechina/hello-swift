@@ -6,6 +6,7 @@
 //
 
 import Algorithms
+import BigNum
 import Foundation
 import Numerics
 
@@ -148,6 +149,39 @@ public func calculatePiDecimal(steps: Int) -> Decimal {
     return pi
 }
 
+public func calculatePiBigFloat(steps: Int) -> BigFloat {
+    
+    // 设置计算精度
+    let precision = 1024 + 32
+    
+    var pi: BigFloat = BigFloat(0)
+
+    for k in 0..<steps {
+        let k_d = BigFloat(k)
+
+        // 1. 计算 16^-k (即 1 / 16^k)
+        let sixteen = BigFloat(16)
+        //        var p16: Decimal = 1
+        //        for _ in 0..<k {
+        //            p16 /= sixteen
+        //        }
+        let p16 = BigFloat.pow(sixteen, BigFloat(-k),precision: precision)
+
+        // 2. 计算括号内的部分: [4/(8k+1) - 2/(8k+4) - 1/(8k+5) - 1/(8k+6)]
+        let term1 = BigFloat(4).divided(by: (BigFloat(8) * k_d + 1), precision: precision)
+        let term2 = BigFloat(2) .divided(by:(BigFloat(8) * k_d + 4), precision: precision)
+        let term3 = BigFloat(1) .divided(by: (BigFloat(8) * k_d + 5), precision: precision)
+        let term4 = BigFloat(1) .divided(by: (BigFloat(8) * k_d + 6), precision: precision)
+
+        let bracket = term1 - term2 - term3 - term4
+
+        // 3. 累加
+        pi += p16 * bracket
+    }
+
+    return pi
+}
+
 public func calculatePiSample() {
     // 使用样例
     let iterations = 1_000_000_000
@@ -172,4 +206,14 @@ func calculatePiDecimalSample() {
     print("计算结果: \(result)")
     print("系统标准: \(Decimal.pi)")
     print("是否相等: \(result == Decimal.pi)")
+}
+
+public func calculatePiBigFloatSample() {
+    let steps = 1024
+    let result = calculatePiBigFloat(steps: steps)
+
+    print("迭代次数: \(steps)")
+    print("计算结果: \(result)")
+    print("系统标准: \(BigFloat.pi)")
+    print("是否相等: \(result == BigFloat.pi)")
 }

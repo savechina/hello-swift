@@ -56,5 +56,8 @@ struct AlgoSampleTest {
         print("系统标准: \(Decimal.pi)")
         print("是否相等: \(result == Decimal.pi)")
     }
-
+    
+    @Test func testCalculatePiBigFloat() async throws {
+        calculatePiBigFloatSample()
+    }
 }
