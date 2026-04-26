@@ -28,10 +28,12 @@ struct AdvanceSampleTest {
     }
 
     @Test func metricsDataServiceSampleTest() async throws {
+        guard #available(macOS 14.0, *) else { return }
         await AdvanceSample.metricsDataServiceSample()
     }
 
     @Test func logServicesSampleTest() async throws {
+        guard #available(macOS 14.0, *) else { return }
         await AdvanceSample.logServicesSample()
     }
 

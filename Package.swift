@@ -55,10 +55,7 @@ let package = Package(
                 .product(name: "AwesomeSample", package: "AwesomeSample"),
                 .product(name: "LeetCodeSample", package: "LeetCodeSample"),
                 "BasicSample", "AlgoSample",
-            ],
-//            resources: [
-//                .process("../../Config")
-//            ]
+            ]
         ),
         .testTarget(
             name: "HelloSampleTests",
