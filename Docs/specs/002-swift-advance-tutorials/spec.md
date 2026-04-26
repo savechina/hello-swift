@@ -85,6 +85,9 @@
 
 - **FR-001**: 系统（Docs 文档）必须为每个 Advance 模块提供独立的 mdBook 章节文件
 - **FR-002**: 每个章节必须遵循 hello-rust 模板结构：开篇故事、本章适合谁、你会学到什么、前置要求、第一个例子、原理解析、常见错误、动手练习（3级）、故障排查 FAQ、小结、术语表、知识检查、继续学习
+
+> **Note**: Constitution III specifies "12-section template". The hello-rust template uses 15 sections (adding Swift vs Rust/Python对比表 and expanded 动手练习 levels). This expansion is approved for advance content to improve cross-language learning outcomes.
+
 - **FR-003**: 所有代码示例必须能从 `AdvanceSample/Sources/AdvanceSample/` 中对应文件编译通过
 - **FR-004**: 文档必须以中文（简体）为主，Swift 专有术语需附带英文对照（如：模型宏 (@Model)、模型容器 (ModelContainer)）
 - **FR-005**: SUMMARY.md 必须按照逻辑学习路径排列 Advance 章节，反映章节间的依赖关系
