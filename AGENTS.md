@@ -115,3 +115,10 @@ mdbook serve Docs/
 - HelloSample depends on all other modules (BasicSample, AlgoSample, AdvanceSample, AwesomeSample, LeetCodeSample)
 - mdBook builds to `Docs/book/` — generated HTML committed to repo (non-standard)
 - Some BasicSample features have no CLI command (ConcurrencySample, DatatypeSample, ErrorsSample, etc.) — accessed programmatically only
+
+## Active Technologies
+- Swift 6.0 (swift-tools-version: 6.0) + swift-argument-parser (CLI), swift-log, SwiftyBeaver (logging) — existing SPM dependencies in Package.swif (001-swift-basic-tutorials)
+- N/A — documentation-only feature (001-swift-basic-tutorials)
+
+## Recent Changes
+- 001-swift-basic-tutorials: Added Swift 6.0 (swift-tools-version: 6.0) + swift-argument-parser (CLI), swift-log, SwiftyBeaver (logging) — existing SPM dependencies in Package.swif
