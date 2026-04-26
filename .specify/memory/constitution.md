@@ -250,12 +250,12 @@ Specification Driven Development (SDD) workflows MUST follow the **8-Phase Devel
 - Constitution check at Phase 1 (verify all 5 principles)
 - Test-first development enforced in Phase 4
 - All quality gates MUST pass before proceeding to next phase
-- Document all decisions in `docs/specs/{N}-{feature}/`
+- Document all decisions in `Docs/specs/{N}-{feature}/`
 - **Manual Control**: User MUST manually review, commit, and push all changes
 
 **Workflow Enforcement:**
 - No direct commits to `main` branch (use feature branches with PRs)
-- All PRs MUST reference a spec document in `docs/specs/`
+- All PRs MUST reference a spec document in `Docs/specs/`
 - All code changes MUST have corresponding test updates
 - Breaking changes MUST update version according to semver and migration guide
 - **CRITICAL**: NO automatic commits or pushes - user maintains full control
@@ -313,7 +313,7 @@ Specification Driven Development (SDD) workflows MUST follow the **8-Phase Devel
 ### Feature Development Lifecycle
 
 1. **Specification** (`/speckit.specify`)
-   - Create feature spec in `docs/specs/<###-feature-name>/spec.md`
+   - Create feature spec in `Docs/specs/<###-feature-name>/spec.md`
    - Define user stories, acceptance criteria, success metrics
    - Quality checklist validation
 
