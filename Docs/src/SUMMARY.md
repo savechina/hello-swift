@@ -23,7 +23,10 @@
 # 高级部分 (Advance)
 
 - [高级进阶](./advance/advance-overview.md)
-  - [Advance Chapter](./advance/advance.md) - JSON处理、文件操作、系统服务、异步编程、环境配置
+    - [JSON 处理](./advance/json.md) - JSONSerialization, Codable, SwiftyJSON
+    - [文件操作](./advance/file-operations.md) - FileManager, 临时文件, 流式读取
+    - [SwiftData 持久化](./advance/swift-data.md) - @Model, ModelContainer, ModelActor
+    - [环境配置](./advance/environment.md) - ProcessInfo, swift-dotenv
 
 # 实战精选 (Awesome)
 
@@ -33,3 +36,5 @@
 
 - [术语表](./basic/glossary.md)
 - [阶段复习](./basic/review-basic.md)
+- [高级术语表](./advance/glossary-advance.md)
+- [高级阶段复习](./advance/review-advance.md)

@@ -22,11 +22,12 @@
 
 | 章节 | 说明 | 难度 | 预计时间 |
 |------|------|------|---------|
-| [JSON 处理](advance.md) | JSONSerialization, JSONDecoder/Encoder, SwiftyJSON | 🟡 中等 | 60 分钟 |
-| [文件操作](advance.md) | FileManager, 临时文件, 目录遍历 | 🟡 中等 | 45 分钟 |
-| [系统服务](advance.md) | SystemConfiguration, 网络可达性, 指标监控 | 🟡 中等 | 45 分钟 |
-| [异步编程](advance.md) | Task, async/await, SwiftNIO 集成 | 🔴 困难 | 60 分钟 |
-| [环境配置](advance.md) | swift-dotenv, .env 文件集成 | 🟢 简单 | 30 分钟 |
+| [JSON 处理](./json.md) | JSONSerialization, JSONDecoder/Codable, SwiftyJSON | 🟡 中等 | 45 分钟 |
+| [文件操作](./file-operations.md) | FileManager, 临时文件, AsyncLineSequence 流式读取 | 🟡 中等 | 40 分钟 |
+| [SwiftData 持久化](./swift-data.md) | @Model, ModelContainer, ModelActor, #Predicate | 🔴 困难 | 60 分钟 |
+| [环境配置](./environment.md) | ProcessInfo, swift-dotenv, 动态成员查找 | 🟢 简单 | 30 分钟 |
+
+> **注意**: SwiftData 章节 requires macOS 14.0+。文件操作的流式读取特性 requires macOS 12.0+。
 
 ---
 
@@ -46,7 +47,7 @@
 ## 📈 学习路径
 
 ```
-JSON 处理 → 文件操作 → 系统服务 → 异步编程 → 环境配置
+JSON 处理 → 文件操作 → SwiftData 持久化 → 环境配置
 ```
 
 ---
@@ -55,20 +56,19 @@ JSON 处理 → 文件操作 → 系统服务 → 异步编程 → 环境配置
 
 完成本部分后，你应该能够：
 
-- [ ] 使用 JSONDecoder 解析嵌套 JSON 数据
+- [ ] 使用 JSONDecoder 和 SwiftyJSON 解析嵌套 JSON 数据
 - [ ] 使用 FileManager 创建、读取、删除文件和目录
-- [ ] 检测网络可达性状态
-- [ ] 使用 SwiftNIO 进行异步 I/O 操作
-- [ ] 使用 swift-dotenv 管理环境变量
+- [ ] 使用 SwiftData @Model 定义数据模型并执行 CRUD 操作
+- [ ] 使用 swift-dotenv 管理 .env 环境变量
 
 ---
 
 ## 🎓 实践项目
 
 **建议练习**:
-1. 编写一个读取 JSON 配置文件并写入日志文件的工具
-2. 实现一个简单的异步网络请求客户端
-3. 创建一个管理 `.env` 环境变量的配置模块
+1. 编写一个读取 JSON API 响应并保存到 SwiftData 数据库的应用
+2. 实现一个从 .env 加载配置并写入日志文件的工具
+3. 创建一个使用 ModelActor 后台导入数据的模块
 
 ---
 
@@ -82,4 +82,4 @@ JSON 处理 → 文件操作 → 系统服务 → 异步编程 → 环境配置
 
 ---
 
-**准备好了吗？让我们开始 [JSON 处理](advance.md) 的学习！** 🚀
+**准备好了吗？让我们开始 [JSON 处理](./json.md) 的学习！** 🚀
