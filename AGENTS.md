@@ -121,6 +121,7 @@ mdbook serve Docs/
 - N/A — documentation-only feature (001-swift-basic-tutorials)
 - Swift 6.0 with Strict Concurrency checking + SwiftyJSON 5.0.2+, swift-dotenv 2.0.0+, SwiftData (Apple framework macOS 14+), mdBook 0.4.52 (002-swift-advance-tutorials)
 - SwiftData (ModelContainer with SQLite backend or in-memory), FileManager paths (002-swift-advance-tutorials)
+- SwiftData (ModelContainer SQLite), FileManager paths, swift-nio ByteBuffer (002-swift-advance-tutorials)
 
 ## Recent Changes
 - 001-swift-basic-tutorials: Added Swift 6.0 (swift-tools-version: 6.0) + swift-argument-parser (CLI), swift-log, SwiftyBeaver (logging) — existing SPM dependencies in Package.swif

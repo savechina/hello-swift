@@ -23,7 +23,9 @@ let package = Package(
         .target(
             name: "AdvanceSample", dependencies: [
                 "SwiftyJSON",
-                .product(name: "SwiftDotenv", package: "swift-dotenv")
+                .product(name: "SwiftDotenv", package: "swift-dotenv"),
+                .product(name: "NIOCore", package: "swift-nio"),
+                .product(name: "NIOPosix", package: "swift-nio")
             ]),
         .testTarget(
             name: "AdvanceSampleTests",

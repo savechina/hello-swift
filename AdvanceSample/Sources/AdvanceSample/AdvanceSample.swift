@@ -32,6 +32,13 @@ public func advanceSample() {
         Thread.sleep(forTimeInterval: 2)
     }
 
+    // Phase 2: SwiftNIO, System, Process samples
+    swiftNIOSample()
+    swiftNIOAsyncSample()
+    systemSample()
+    systemProgrammingSample()
+    processExecutionSample()
+
 }
 
 /// jsonSample

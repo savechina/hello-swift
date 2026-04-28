@@ -1,12 +1,14 @@
 # 阶段复习：高级进阶
 
-完成高级进阶部分的四个章节后，让我们通过本复习章节巩固所学知识。
+完成高级进阶部分的八个章节后，让我们通过本复习章节巩固所学知识。
 
 ---
 
 ## 📋 知识回顾
 
-### 1. JSON 处理
+### Phase 1: 数据处理与持久化
+
+#### 1. JSON 处理
 
 **核心概念**:
 - **JSONSerialization**: Foundation 传统方法，返回 `Any` 类型，需要手动转换
@@ -21,7 +23,7 @@
 
 ---
 
-### 2. 文件操作
+#### 2. 文件操作
 
 **核心概念**:
 - **FileManager**: 文件系统操作的核心类
@@ -37,7 +39,7 @@
 
 ---
 
-### 3. SwiftData 持久化
+#### 3. SwiftData 持久化
 
 **核心概念**:
 - **@Model**: 数据模型宏，自动生成持久化代码
@@ -55,7 +57,7 @@
 
 ---
 
-### 4. 环境配置
+#### 4. 环境配置
 
 **核心概念**:
 - **ProcessInfo.processInfo.environment**: 读取系统环境变量
@@ -68,6 +70,73 @@
 - `.env` 文件不要提交到 Git（添加到 `.gitignore`）
 - 开发/生产环境切换使用不同的 `.env` 文件
 - 使用 `Dotenv["KEY"]` 或 `Dotenv.key?.stringValue` 访问值
+
+---
+
+### Phase 2: 网络与系统编程
+
+#### 5. SwiftNIO 网络基础
+
+**核心概念**:
+- **EventLoop**: 单线程事件循环，管理多个网络连接
+- **Channel**: 网络连接抽象，由 Pipeline 和 Handler 组成
+- **ChannelHandler**: 入站/出站数据处理单元
+- **ByteBuffer**: 高效字节容器，零拷贝设计
+- **ServerBootstrap**: TCP 服务器启动器
+
+**关键要点**:
+- 一个 EventLoop 可以管理数千连接，避免线程爆炸
+- ChannelHandler 分为 InboundHandler 和 OutboundHandler
+- ByteBuffer 的 slice 操作不复制数据（零拷贝）
+- 不要在 EventLoop 线程使用 Thread.sleep（会阻塞所有连接）
+
+---
+
+#### 6. SwiftNIO async/await 集成
+
+**核心概念**:
+- **Future → async 桥接**: withCheckedContinuation 转换回调式 API
+- **NIOLoopBoundBox**: 跨 Actor 安全访问 EventLoop-bound 值
+- **NIOAsyncChannel**: SwiftNIO 2.40+ 原生 async/await API
+- **Sendable 约束**: Channel 不是 Sendable，需要包装
+
+**关键要点**:
+- 不要在 async 函数中调用 `future.wait()`（会阻塞底层线程）
+- NIOLoopBoundBox 保证在正确的 EventLoop 上操作 Channel
+- NIOAsyncChannel 提供 AsyncSequence 接口，简化代码
+- Actor 内部不能用 Channel，需要用 NIOLoopBoundBox 包装
+
+---
+
+#### 7. 系统编程
+
+**核心概念**:
+- **Process**: Foundation 进程执行类，捕获 stdout/stderr
+- **Pipe**: 进程间通信的数据流
+- **Signal**: SIGINT/SIGTERM 捕获，优雅关闭
+- **跨平台路径**: macOS Documents/Caches vs Linux HOME/tmp
+
+**关键要点**:
+- Process.run() 非阻塞，waitUntilExit() 阻塞等待
+- 使用 Pipe 捕获子进程输出
+- Linux 没有 Documents 目录，使用 HOME 或 currentDirectoryPath
+- Signal Handler 应只设置标志，主循环处理清理逻辑
+
+---
+
+#### 8. 测试框架
+
+**核心概念**:
+- **XCTestCase**: 测试类基类，setUp/tearDown 生命周期
+- **断言方法**: XCTAssertEqual、XCTAssertTrue、XCTAssertThrowsError 等
+- **async 测试**: 测试方法标记 async，使用 await
+- **measure {}**: 性能测试，测量执行时间
+
+**关键要点**:
+- 测试方法必须以 `test` 开头
+- setUp 在每个测试前执行，tearDown 在每个测试后执行
+- @testable import 可访问 internal 成员
+- swift test --filter 只运行部分测试
 
 ---
 
@@ -118,37 +187,102 @@ for user in users {
 
 ---
 
-### 练习 2: 环境配置 + 文件日志
+### 练习 2: SwiftNIO Echo Server + Process 测试
 
-**任务**: 从 .env 加载 API 密钥，读取文件，记录操作日志。
+**任务**: 创建 SwiftNIO Echo Server，使用 Process 执行 telnet 测试连接。
 
 **步骤**:
-1. Dotenv.configure() 加载配置
-2. 获取 API_KEY 值
-3. 使用 FileManager 写入日志文件到 Application Support
-4. 使用 AsyncLineSequence 读取日志验证
+1. ServerBootstrap 创建 TCP 服务器监听 8080
+2. EchoHandler 收到消息原样返回
+3. Process 执行 telnet 连接测试
 
 <details>
 <summary>点击查看提示</summary>
 
 ```swift
-// 1. 加载配置
-try Dotenv.configure()
-let apiKey = Dotenv.apiKey?.stringValue
+// 1. 创建 Echo Server
+let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
+let bootstrap = ServerBootstrap(group: group)
+    .childChannelInitializer { channel in
+        channel.pipeline.addHandler(EchoHandler())
+    }
+let server = try bootstrap.bind(host: "127.0.0.1", port: 8080).wait()
 
-// 2. 获取 Application Support 目录
-let appSupport = FileManager.default.urls(
-    for: .applicationSupportDirectory,
-    in: .userDomainMask
-).first!
+// 2. EchoHandler 实现
+final class EchoHandler: ChannelInboundHandler {
+    func channelRead(context: ChannelHandlerContext, data: NIOAny) {
+        context.write(data, promise: nil)
+    }
+    func channelReadComplete(context: ChannelHandlerContext) {
+        context.flush()
+    }
+}
 
-// 3. 写入日志
-let logFile = appSupport.appendingPathComponent("operations.log")
-try logData.write(to: logFile)
+// 3. Process 测试
+let process = Process()
+process.executableURL = URL(fileURLWithPath: "/usr/bin/telnet")
+process.arguments = ["127.0.0.1", "8080"]
+process.run()
+```
 
-// 4. 流式读取
-for try await line in logFile.lines {
-    print("Log: \(line)")
+</details>
+
+---
+
+### 练习 3: XCTest 测试覆盖
+
+**任务**: 为 Process 执行函数编写 XCTest 测试。
+
+**步骤**:
+1. 测试正常命令执行（如 /bin/ls）
+2. 测试错误命令路径
+3. 测试输出捕获
+4. async 测试异步执行
+
+<details>
+<summary>点击查看提示</summary>
+
+```swift
+final class ProcessTests: XCTestCase {
+    
+    func testExecuteLs() {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/bin/ls")
+        process.arguments = ["-la"]
+        
+        process.run()
+        process.waitUntilExit()
+        
+        XCTAssertEqual(process.terminationStatus, 0)
+    }
+    
+    func testCaptureOutput() {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/bin/echo")
+        process.arguments = ["test"]
+        
+        let pipe = Pipe()
+        process.standardOutput = pipe
+        
+        process.run()
+        process.waitUntilExit()
+        
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        let output = String(data: data, encoding: .utf8) ?? ""
+        
+        XCTAssertTrue(output.contains("test"))
+    }
+    
+    func testAsyncExecute() async throws {
+        let result = await withCheckedContinuation { continuation in
+            let process = Process()
+            process.executableURL = URL(fileURLWithPath: "/bin/ls")
+            process.run()
+            process.waitUntilExit()
+            continuation.resume(returning: process.terminationStatus)
+        }
+        XCTAssertEqual(result, 0)
+    }
 }
 ```
 
@@ -158,9 +292,9 @@ for try await line in logFile.lines {
 
 ## ✅ 知识检查
 
-### 问题 1
+### Phase 1 问题
 
-**Swift 中解析 JSON 有哪三种主要方法？各自的优缺点是什么？**
+**问题 1: Swift 中解析 JSON 有哪三种主要方法？各自的优缺点是什么？**
 
 <details>
 <summary>点击查看答案</summary>
@@ -175,9 +309,7 @@ for try await line in logFile.lines {
 
 ---
 
-### 问题 2
-
-**FileManager 的 Documents、Caches、Temp 目录有什么区别？**
+**问题 2: FileManager 的 Documents、Caches、Temp 目录有什么区别？**
 
 <details>
 <summary>点击查看答案</summary>
@@ -193,9 +325,7 @@ for try await line in logFile.lines {
 
 ---
 
-### 问题 3
-
-**SwiftData 的 @ModelActor 模式解决了什么问题？如何正确使用？**
+**问题 3: SwiftData 的 @ModelActor 模式解决了什么问题？如何正确使用？**
 
 <details>
 <summary>点击查看答案</summary>
@@ -228,24 +358,85 @@ actor DataImporter {
 
 ---
 
-### 问题 4
+### Phase 2 问题
 
-**为什么不应该硬编码 API 密钥？swift-dotenv 如何帮助解决这个问题？**
+**问题 4: 为什么不能在 EventLoop 线程调用 Thread.sleep？正确的替代方法是什么？**
 
 <details>
 <summary>点击查看答案</summary>
 
 **原因**:
-- 安全性：密钥泄露后被滥用
-- 灵活性：开发/测试/生产环境使用不同密钥
-- 代码共享：公开代码时密钥不应暴露
+- EventLoop 是单线程，管理数千连接
+- Thread.sleep 阻塞整个线程，所有连接的处理都会卡住
+- 这违反了 SwiftNIO 的非阻塞设计原则
 
-**swift-dotenv 方案**:
-- 将密钥存储在 `.env` 文件
-- `.env` 文件添加到 `.gitignore`
-- 使用 `Dotenv.configure()` 加载
-- 通过 `Dotenv.apiKey` 访问
-- 不同环境使用不同的 `.env.production` / `.env.development`
+**正确替代**:
+- 使用 `eventLoop.scheduleTask(in: .seconds(1)) { }`
+- 使用 Swift Concurrency 的 `Task.sleep(nanoseconds:)`
+- 使用 continuation 桥接 async 函数
+
+</details>
+
+---
+
+**问题 5: NIOLoopBoundBox 的作用是什么？如何使用？**
+
+<details>
+<summary>点击查看答案</summary>
+
+**作用**:
+- 包装 EventLoop-bound 值（如 Channel），使其符合 Sendable
+- 保证跨 Actor 访问时在正确的 EventLoop 上操作
+
+**使用方法**:
+```swift
+let box = NIOLoopBoundBox(channel, eventLoop: eventLoop)
+
+// 跨 Actor 使用
+try await box.withValue { channel in
+    // 这里在 channel 的 EventLoop 上执行
+    channel.writeAndFlush(data, promise: nil)
+}
+```
+
+</details>
+
+---
+
+**问题 6: Process 的 run() 和 waitUntilExit() 有什么区别？**
+
+<details>
+<summary>点击查看答案</summary>
+
+| 方法 | 作用 | 阻塞性 |
+|------|------|--------|
+| run() | 启动子进程 | 非阻塞，立即返回 |
+| waitUntilExit() | 等待子进程完成 | 阻塞，直到进程退出 |
+| terminate() | 发送 SIGTERM | 非阻塞，请求终止 |
+
+**关键点**:
+- run() 后进程独立运行，父进程继续执行
+- waitUntilExit() 阻塞父进程，等待子进程
+- 正确顺序：run() → (可选操作) → waitUntilExit()
+
+</details>
+
+---
+
+**问题 7: XCTestCase 的 setUp 和 tearDown 在什么时候执行？**
+
+<details>
+<summary>点击查看答案</summary>
+
+**执行时机**:
+- setUp: 在**每个**测试方法执行前调用
+- tearDown: 在**每个**测试方法执行后调用
+- 执行顺序: setUp → testMethod → tearDown → setUp → nextTestMethod → tearDown
+
+**关键点**:
+- 每个测试前后都执行，保证测试隔离
+- setUp 用于初始化共享资源
+- tearDown 用于清理资源，防止测试间影响
 
 </details>
 
@@ -254,6 +445,8 @@ actor DataImporter {
 ## 📈 自我评估
 
 完成以下检查项，评估你的掌握程度：
+
+### Phase 1 掌握度
 
 - [ ] 能够使用 JSONDecoder 解析嵌套 JSON 并处理可选字段
 - [ ] 能够使用 CodingKeys 自定义 JSON 键名映射
@@ -266,7 +459,20 @@ actor DataImporter {
 - [ ] 能够使用 @ModelActor 在后台线程安全操作数据库
 - [ ] 能够使用 ProcessInfo 读取系统环境变量
 - [ ] 能够使用 swift-dotenv 加载 .env 文件
-- [ ] 理解为什么不应该硬编码敏感配置
+
+### Phase 2 掌握度
+
+- [ ] 理解 EventLoop 如何在单线程管理多连接
+- [ ] 能够创建 SwiftNIO Echo Server
+- [ ] 能够使用 ByteBuffer 读写数据并理解零拷贝
+- [ ] 能够将 EventLoopFuture 桥接到 async/await
+- [ ] 理解 NIOLoopBoundBox 解决的问题
+- [ ] 能够使用 Process 执行命令并捕获输出
+- [ ] 理解 Signal 处理的注意事项
+- [ ] 知道 macOS 和 Linux 的路径差异
+- [ ] 能够编写 XCTestCase 测试类
+- [ ] 能够使用 async 测试方法
+- [ ] 能够使用 measure {} 性能测试
 
 ---
 

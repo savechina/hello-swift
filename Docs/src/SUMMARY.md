@@ -27,6 +27,10 @@
     - [文件操作](./advance/file-operations.md) - FileManager, 临时文件, 流式读取
     - [SwiftData 持久化](./advance/swift-data.md) - @Model, ModelContainer, ModelActor
     - [环境配置](./advance/environment.md) - ProcessInfo, swift-dotenv
+    - [SwiftNIO 网络基础](./advance/swift-nio-basics.md) - EventLoop, Channel, ByteBuffer
+    - [SwiftNIO async/await](./advance/swift-nio-async.md) - Future 桥接, NIOLoopBoundBox
+    - [系统编程](./advance/system-programming.md) - Process, Signal, 跨平台路径
+    - [测试框架](./advance/testing.md) - XCTest, async 测试, 性能基准
 
 # 实战精选 (Awesome)
 
