@@ -177,4 +177,80 @@
 
 ---
 
+## Vapor Web 框架术语
+
+| 中文 | 英文 | 说明 |
+|------|------|------|
+| 路由 | Route | URL 路径到处理函数的映射 |
+| 中间件 | Middleware | 拦截请求/响应的处理器链 |
+| 内容协议 | Content | Vapor 的 JSON 编解码协议 |
+| 应用实例 | Application | Vapor 服务器的核心对象 |
+| 异步中间件 | AsyncMiddleware | 支持 async/await 的中间件 |
+| 异步响应器 | AsyncResponder | 中间件链中的下一个处理器 |
+| 参数提取 | Parameters | 从 URL 路径中提取动态值 |
+| Fluent ORM | Fluent | Vapor 的数据库 ORM 框架 |
+
+---
+
+## GRDB 数据库术语
+
+| 中文 | 英文 | 说明 |
+|------|------|------|
+| 数据库队列 | DatabaseQueue | 单线程 SQLite 连接管理器 |
+| 数据库池 | DatabasePool | 多线程 SQLite 连接池 |
+| 可获取记录 | FetchableRecord | 从数据库行解码为 Swift 类型的协议 |
+| 可持久化记录 | PersistableRecord | 将 Swift 类型写入数据库的协议 |
+| 查询接口 | QueryInterface | 类型安全的 SQL 查询 DSL |
+| 关联 | Association | 表之间的关系定义（BelongsTo/HasMany） |
+| 事务 | Transaction | 原子性的数据库操作组 |
+| WAL 模式 | WAL Mode | Write-Ahead Logging，提高并发性能 |
+
+---
+
+## 并发深入术语
+
+| 中文 | 英文 | 说明 |
+|------|------|------|
+| 参与者 | Actor | Swift 并发模型中的隔离单元，保证数据安全 |
+| 隔离域 | Isolation Domain | Actor 保护的状态范围 |
+| 非隔离 | Nonisolated | 不受 Actor 隔离限制的方法 |
+| 可发送 | Sendable | 可安全跨并发边界传递的类型 |
+| 严格并发 | Strict Concurrency | Swift 6 的编译时并发安全检查 |
+| 闭包捕获 | Closure Capture | 闭包引用外部变量的行为 |
+| 未检查发送 | @unchecked Sendable | 手动声明 Sendable（编译器不验证） |
+
+---
+
+## Swift 高级特性术语
+
+| 中文 | 英文 | 说明 |
+|------|------|------|
+| 属性包装器 | Property Wrapper | 包装属性 get/set 的自定义类型 |
+| 包装值 | Wrapped Value | 属性包装器存储的实际值 |
+| 投影值 | Projected Value | 属性包装器暴露的额外接口（$ 前缀） |
+| 自动引用计数 | ARC | Swift 的内存管理机制 |
+| 强引用 | Strong Reference | 增加对象引用计数的引用 |
+| 弱引用 | Weak Reference | 不增加引用计数，自动置 nil |
+| 无主引用 | Unowned Reference | 不增加引用计数，不会自动置 nil |
+| 循环引用 | Retain Cycle | 两个对象互相强引用导致无法释放 |
+| 不透明类型 | Opaque Type | `some Protocol`，隐藏具体返回类型 |
+| 存在类型 | Existential Type | `any Protocol`，运行时类型擦除 |
+| 类型擦除 | Type Erasure | 将具体类型转换为协议类型 |
+| 动态分发 | Dynamic Dispatch | 运行期查找方法实现 |
+| 不安全指针 | Unsafe Pointer | 绕过 Swift 类型安全检查的指针 |
+| 内存布局 | Memory Layout | 类型在内存中的大小、间距、对齐 |
+| 悬垂指针 | Dangling Pointer | 指向已释放内存的指针 |
+| 宏 | Macro | 编译时代码生成机制 |
+| 附加宏 | Attached Macro | 附加到已有类型上的宏（如 @Model） |
+| 独立宏 | Freestanding Macro | 不依赖类型的独立表达式（如 #warning） |
+| 宏展开 | Macro Expansion | 编译器将宏替换为实际代码的过程 |
+| 结果构建器 | Result Builder | 将声明式语法转换为函数调用的机制 |
+| 声明式 | Declarative | 描述"做什么"而非"怎么做" |
+| 构建块 | Build Block | 组合多个组件的核心方法 |
+| 反射 | Reflection | 运行时检查类型结构的能力 |
+| 显示样式 | Display Style | Mirror 中类型的外观类别 |
+| 只读 | Read-Only | 只能读取不能修改 |
+
+---
+
 **返回**: [高级进阶](./advance-overview.md)

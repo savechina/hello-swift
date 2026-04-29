@@ -1,260 +1,567 @@
-# Research: Swift Advance Tutorial Content Generation
+# Research: Swift Advance Tutorial Phase 3
 
+**Date**: 2026-04-28
 **Feature**: 002-swift-advance-tutorials
-**Created**: 2026-04-26
-**Source**: [plan.md](./plan.md)
 
----
+## Overview
 
-## Design Decisions
+Gap analysis against hello-rust (41 advance chapters) identified critical missing topics for Swift backend/system programming. Phase 3 expands coverage from 8 chapters to 20 chapters.
 
-### Decision 1: Chapter Structure Template
+## Gap Analysis Summary
 
-**Decision**: Follow hello-rust 15-section template pattern for all Advance chapters.
+### hello-rust Coverage (41 chapters)
 
-**Rationale**: 
-- hello-rust has proven 45 advance chapters with consistent structure (开篇故事, 常见错误, 动手练习 present in 38/45 files)
-- Chinese learners expect familiar structure after completing Basic section
-- Constitution III requires "12-section template" - hello-rust has 15 sections which provides more comprehensive coverage
+| Category | Chapters | Topics |
+|----------|----------|--------|
+| Async | 6 | tokio, futures, mio, rayon, cyclerc, async |
+| Data | 4 | json, csv, rkyv, serialization |
+| Database | 3 | diesel, sqlx, database |
+| Error-handling | 1 | error-chain, anyhow |
+| System | 13 | cli, dotenv, process, bytes, tempfile, memmap, sysinfo, IPC, UDS, cow, includedir, directory, rust-eliminates |
+| Testing | 6 | test, mock, rspec, macros, getset, typealias |
+| Web | 4 | axum, hyper, grpc, ollama |
+| Tools | 2 | objectstore, services |
+| Core Language | 4 | smart-pointers, iterators, atomic-types, advanced-traits |
 
-**Template Sections** (15 total):
-1. 开篇故事 - Analogy-based opening
-2. 本章适合谁 - Target audience
-3. 你会学到什么 - Learning outcomes
-4. 前置要求 - Prerequisites
-5. 第一个例子 - Runnable example
-6. 原理解析 - Deep dive
-7. 常见错误 - Common pitfalls (3+ required per FR-010)
-8. Swift vs Rust/Python 对比 - Cross-language comparison (FR-006)
-9. 动手练习 Level 1 - Basic application
-10. 动手练习 Level 2 - Integrated scenario
-11. 动手练习 Level 3 - Extended challenge
-12. 故障排查 FAQ - Q&A pairs
-13. 小结 - Recap
-14. 术语表 - English/Chinese glossary
-15. 知识检查 - Quiz with hidden answers
+### hello-swift Current Coverage (8 chapters)
 
-**Alternatives Considered**:
-- Apple official docs structure (too sparse, no exercises)
-- Medium article format (no quiz/FAQ sections)
+| Phase | Chapters | Topics |
+|-------|----------|--------|
+| Phase 1 | 4 | JSON, File Operations, SwiftData, Environment |
+| Phase 2 | 4 | SwiftNIO Basics, SwiftNIO Async, System Programming, Testing |
 
----
+### Critical Gaps Identified
 
-### Decision 2: Chapter File Naming Convention
+| Gap | hello-rust Coverage | Swift Equivalent | Priority |
+|-----|---------------------|------------------|----------|
+| Web Frameworks | axum, hyper | Vapor, Hummingbird | P0 |
+| SQL Database | diesel, sqlx | GRDB, SQLite.swift | P0 |
+| Actors/Sendable | tokio async | Swift Actors | P0 |
+| Property Wrappers | Rust macros | Swift @propertyWrapper | P1 |
+| ARC Memory | - (Rust ownership) | Swift ARC | P1 |
+| Opaque Types | impl Trait | Swift some/any | P1 |
+| Unsafe Pointers | unsafe Rust | Swift UnsafePointer | P2 |
+| Macros | procedural macros | Swift Macros | P2 |
+| Result Builders | - | Swift @resultBuilder | P2 |
+| Reflection | - | Swift Mirror | P3 |
 
-**Decision**: Use flat naming pattern: `{topic}.md` (e.g., `json.md`, `swift-data.md`)
+## Research Findings
 
-**Rationale**:
-- hello-rust advance uses subdirectories (`advance/data/json.md`, `advance/system/tempfile.md`) but has 45 chapters
-- hello-swift has only 4 chapters - subdirectory nesting adds unnecessary complexity
-- SUMMARY.md navigation simpler with flat structure
-- Constitution requires "GitHub links to all source code examples" - flat names easier to reference
+### 1. Vapor Web Framework
 
-**File Names**:
-- `json.md` - JSON processing chapter
-- `file-operations.md` - FileManager + I/O chapter
-- `swift-data.md` - SwiftData persistence chapter
-- `environment.md` - ProcessInfo + dotenv chapter
-- `review-advance.md` - Stage review chapter
-- `glossary-advance.md` - Advance terminology glossary
+**Official Documentation**: https://docs.vapor.codes/
 
-**Alternatives Considered**:
-- Nested structure (`advance/data/json.md`) - rejected for 4 chapters
-- Numbered prefix (`01-json.md`) - rejected for flexibility
+**Key Features**:
+- SwiftNIO-based async HTTP server
+- Fluent ORM for database operations
+- Middleware support for authentication, logging
+- WebSocket support via swift-nio-transport-services
 
----
+**Best Practices (from Vapor docs + GitHub examples)**:
+- Use `app.routes()` for route grouping
+- Use `app.middleware()` for request interception
+- Use `Fluent` for type-safe database queries
+- Use `Content` protocol for JSON encoding/decoding
 
-### Decision 3: Code-to-Chapter Mapping Strategy
+**Sample Implementation Pattern**:
+```swift
+// VaporSample.swift - Minimal REST API
+import Vapor
 
-**Decision**: Each chapter references exactly ONE Swift source file from `AdvanceSample/Sources/AdvanceSample/`.
-
-**Mapping Table**:
-
-| Chapter | Source File | Functions Covered |
-|---------|-------------|-------------------|
-| json.md | `AdvanceSample.swift` | `jsonSample()`, JSONSerialization, JSONDecoder, SwiftyJSON |
-| file-operations.md | `FileOperationSample.swift` | `fileManagerPathSample()`, `temporaryFileSample()`, TemporaryFile class |
-| swift-data.md | `SwiftDataSample.swift` | `logServicesSample()`, `metricsDataServiceSample()`, ServerLog, ServiceMetrics, LogService, MetricsDataService |
-| environment.md | `DotenvySample.swift` | `processInfoEnvSample()`, `dotenvSample()`, Dotenv API |
-
-**Rationale**:
-- Constitution I requires "All code examples MUST be from real project code"
-- Existing AdvanceSample files compile clean with `swift build`
-- One-to-one mapping avoids duplicate examples across chapters
-- Source files already have `///` documentation comments
-
-**Alternatives Considered**:
-- Extract functions into new sample files - rejected (creates maintenance burden)
-- Create synthetic examples - rejected (constitution prohibits fictional examples)
-
----
-
-### Decision 4: SwiftData Chapter Structure
-
-**Decision**: 8 subsections for SwiftData covering @Model → ModelActor progression.
-
-**Structure** (based on librarian research):
-1. SwiftData 简介 - What is SwiftData, iOS 17+ / macOS 14+ requirement
-2. 定义数据模型 (@Model) - @Model macro, property types, init requirements
-3. 容器与上下文 (ModelContainer/Context) - ModelContainer configuration, ModelContext operations
-4. 查询数据 (FetchDescriptor) - FetchDescriptor, SortDescriptor
-5. 条件查询 (#Predicate) - #Predicate macro, compound queries
-6. 后台并发 (@ModelActor) - ModelActor pattern, PersistentIdentifier, cross-actor data passing
-7. 关系与迁移 - @Relationship, cascade delete, lightweight migration
-8. 综合练习 - Complete CRUD application
-
-**Common Errors to Document** (from research):
-1.忘记将模型添加到 ModelContainer - Returns empty array
-2. 在不同 Context 之间建立关系 - Crash: "Illegal attempt to establish relationship"
-3. 在 Predicate 中使用不支持的类型 - EXC_BAD_ACCESS on array queries
-4. 跨 Actor 传递模型对象 - Compilation error: model objects not Sendable
-5. 忘记提供初始化器 - "@Model requires an initializer"
-
-**Alternatives Considered**:
-- Single chapter covering all concepts - rejected (too long, >1000 lines)
-- Split into two chapters (basics + advanced) - rejected (4 chapters scope)
-
----
-
-### Decision 5: Platform Compatibility Handling
-
-**Decision**: Document macOS 14.0+ requirement for SwiftData, macOS 12.0+ for FileManager async APIs, Linux limitations in 前置要求 section.
-
-**Platform Matrix**:
-
-| Feature | macOS 14+ | macOS 12-13 | Linux |
-|---------|-----------|-------------|-------|
-| SwiftData (@Model) | ✅ Full support | ❌ Not available | ❌ Not available |
-| FileManager async (AsyncLineSequence) | ✅ Full support | ✅ Available | ⚠️ Limited paths |
-| FileManager standard paths (Documents/Caches) | ✅ Available | ✅ Available | ❌ No sandbox paths |
-| ProcessInfo.processInfo | ✅ Available | ✅ Available | ✅ Available |
-| swift-dotenv | ✅ Available | ✅ Available | ✅ Available |
-
-**Edge Case Handling** (per spec):
-- macOS < 14: Show `#available(macOS 14.0, *)` guard pattern in examples
-- Linux: Document path differences (no Documents/Caches, use `currentDirectoryPath`)
-- Temp files on crash: Document RAII pattern with `deinit` cleanup
-
-**Alternatives Considered**:
-- Skip SwiftData for Linux compatibility - rejected (key macOS feature)
-- Create separate Linux chapter variants - rejected (out of scope)
-
----
-
-### Decision 6: SUMMARY.md Navigation Structure
-
-**Decision**: Nested navigation with chapter descriptions matching hello-rust pattern.
-
-```markdown
-# 高级部分 (Advance)
-
-- [高级进阶](./advance/advance-overview.md)
-    - [JSON 处理](./advance/json.md) - JSONSerialization, Codable, SwiftyJSON
-    - [文件操作](./advance/file-operations.md) - FileManager, 临时文件, 流式读取
-    - [SwiftData 持久化](./advance/swift-data.md) - @Model, ModelContainer, ModelActor
-    - [环境配置](./advance/environment.md) - ProcessInfo, swift-dotenv
-- [阶段复习：高级部分](./advance/review-advance.md)
+func vaporSample() {
+    let app = Application()
+    
+    app.get("hello") { req in
+        return "Hello, Vapor!"
+    }
+    
+    app.post("users") { req async throws -> User in
+        let user = try req.content.decode(User.self)
+        // Fluent save
+        return user
+    }
+    
+    try app.run()
+}
 ```
 
-**Rationale**:
-- hello-rust SUMMARY.md advance section has descriptions after each link (e.g., "Box, Rc, RefCell, Arc")
-- Provides quick topic preview without opening chapter
-- Consistent with existing hello-swift SUMMARY.md basic section format
+**Integration with hello-swift**: Add as nested package dependency, create VaporSample.swift demonstrating basic REST API.
 
-**Alternatives Considered**:
-- Flat list without descriptions - rejected (less discoverable)
-- Separate SUMMARY for advance section - rejected (mdBook requires single SUMMARY.md)
+### 2. GRDB SQLite Database
 
----
+**Official Documentation**: https://github.com/groue/GRDB.swift
 
-### Decision 7: advance-overview.md Update Strategy
+**Key Features**:
+- Record protocol for type-safe models
+- QueryInterface DSL for SQL generation
+- Associations (BelongsTo, HasMany, HasOne)
+- Transaction support with `db.inTransaction {}`
+- Raw SQL fallback with `SQLRequest`
 
-**Decision**: Replace current overview's 5-chapter table with 4-chapter table including SwiftData.
+**Best Practices (from GRDB README + examples)**:
+- Use `FetchableRecord` + `PersistableRecord` protocols
+- Use `QueryInterfaceRequest` for chainable queries
+- Use `Association` for JOIN operations
+- Use `DatabasePool` for concurrent access
 
-**Current advance-overview.md Issue**:
-- Lists "System Services" chapter (no source code)
-- Lists "Async Programming" chapter (no SwiftNIO usage in source)
-- Missing SwiftData chapter (SwiftDataSample.swift exists)
+**Sample Implementation Pattern**:
+```swift
+// GRDBSample.swift - Basic SQLite operations
+import GRDB
 
-**Updated Table**:
+struct Player: Record, FetchableRecord, PersistableRecord {
+    var id: Int64?
+    var name: String
+    var score: Int
+}
 
-| 章节 | 预计时间 | 难度 | 涉及知识点 |
-|------|----------|------|------------|
-| JSON 处理 | 45分钟 | ⭐⭐⭐ | JSONSerialization, Codable, SwiftyJSON |
-| 文件操作 | 40分钟 | ⭐⭐⭐ | FileManager, 临时文件, AsyncLineSequence |
-| SwiftData 持久化 | 60分钟 | ⭐⭐⭐⭐ | @Model, ModelContainer, ModelActor, #Predicate |
-| 环境配置 | 30分钟 | ⭐⭐ | ProcessInfo, swift-dotenv, dynamic member lookup |
+func grdbSample() throws {
+    let dbQueue = DatabaseQueue()
+    
+    try dbQueue.write { db in
+        try db.create(table: "player") { t in
+            t.autoIncrementedPrimaryKey("id")
+            t.column("name", .text).notNull()
+            t.column("score", .integer).notNull()
+        }
+        
+        var player = Player(name: "Alice", score: 100)
+        try player.insert(db)
+        
+        let players = try Player.fetchAll(db)
+        print(players)
+    }
+}
+```
 
-**Alternatives Considered**:
-- Keep System Services as placeholder - rejected (FR-011 requires SwiftData inclusion)
-- Add SwiftNIO chapter - rejected (no source code exists)
+**Integration with hello-swift**: Add GRDB dependency, create GRDBSample.swift demonstrating CRUD operations.
 
----
+### 3. Swift Actors
 
-### Decision 8: Empty advance.md Resolution
+**Swift Documentation**: https://docs.swift.org/swift-book/LanguageGuide/Concurrency.html
 
-**Decision**: Delete `advance.md` (empty file), use `advance-overview.md` as landing page.
+**Key Concepts**:
+- Actor isolation (protected state)
+- `await` required for actor method calls
+- `actor` vs `class` difference (implicit isolation)
+- `nonisolated` keyword for public methods
 
-**Rationale**:
-- `advance.md` is 0 lines (empty placeholder from earlier project setup)
-- `advance-overview.md` (85 lines) already serves as landing page with chapter table
-- mdBook SUMMARY.md links to `advance-overview.md`, not `advance.md`
-- Removing empty file simplifies documentation structure
+**Best Practices (from Swift docs + SwiftBySundell)**:
+- Use actors for shared mutable state
+- Mark synchronous methods `nonisolated` when safe
+- Use `Task.sleep` not `Thread.sleep` in actors
+- Combine with `Sendable` for cross-actor data
 
-**Alternatives Considered**:
-- Populate advance.md with chapter summaries - rejected (duplicate content)
-- Rename advance-overview.md to advance.md - rejected (breaks existing SUMMARY.md links)
+**Sample Implementation Pattern**:
+```swift
+// ActorSample.swift - Bank account actor
+actor BankAccount {
+    let accountNumber: Int
+    var balance: Double
+    
+    init(accountNumber: Int, initialBalance: Double) {
+        self.accountNumber = accountNumber
+        self.balance = initialBalance
+    }
+    
+    func deposit(amount: Double) {
+        balance += amount
+    }
+    
+    func withdraw(amount: Double) -> Bool {
+        guard balance >= amount else { return false }
+        balance -= amount
+        return true
+    }
+    
+    nonisolated func description() -> String {
+        "Account \(accountNumber)"
+    }
+}
 
----
+func actorSample() async {
+    let account = BankAccount(accountNumber: 1, initialBalance: 1000)
+    await account.deposit(amount: 500)
+    let success = await account.withdraw(amount: 200)
+    print("Withdrawal: \(success)")
+}
+```
 
-## Dependencies Analysis
+### 4. Sendable Protocol
 
-### Existing Dependencies (AdvanceSample/Package.swift)
+**Swift Documentation**: https://docs.swift.org/swift-book/LanguageGuide/Concurrency.html#ID553
 
-| Package | Version | Used In | Chapter |
-|---------|---------|---------|---------|
-| SwiftyJSON | 5.0.2+ | AdvanceSample.swift | json.md |
-| swift-nio | 2.92.0+ | **NOT USED** | Skip |
-| swift-dotenv | 2.0.0+ | DotenvySample.swift | environment.md |
-| SwiftData | Apple framework | SwiftDataSample.swift | swift-data.md |
+**Key Concepts**:
+- Types crossing concurrency boundaries MUST be Sendable
+- Implicitly Sendable: value types, `@Sendable` closures
+- Non-Sendable: classes (reference types), mutable state
+- Compiler enforces Sendable in Swift 6 strict mode
 
-### Documentation Dependencies
+**Best Practices**:
+- Use value types (structs) for concurrent data
+- Mark closures `@Sendable` for Task usage
+- Avoid capturing non-Sendable in closures
+- Use `@unchecked Sendable` sparingly with justification
 
-| Tool | Version | Purpose |
-|------|---------|---------|
-| mdBook | 0.4.52 | Documentation build |
-| Swift 6.0 | toolchain | Code compilation verification |
+**Sample Implementation Pattern**:
+```swift
+// ConcurrencyDeepSample.swift - Sendable examples
+struct UserData: Sendable { // Implicitly Sendable
+    let name: String
+    let age: Int
+}
 
----
+class NonSendableClass {
+    var value: Int = 0
+}
 
-## Quality Assurance
+func sendableSample() async {
+    let data = UserData(name: "Alice", age: 30)
+    
+    // ✅ Sendable data - allowed
+    Task {
+        print(data.name)
+    }
+    
+    // ❌ Non-Sendable class - compiler error
+    // let obj = NonSendableClass()
+    // Task { print(obj.value) } // Error!
+    
+    // ✅ @Sendable closure
+    let closure: @Sendable () -> Void = {
+        print(data.age)
+    }
+    Task(operation: closure)
+}
+```
 
-### Validation Checklist (Post-Research)
+### 5. Property Wrappers
 
-- [x] All NEEDS CLARIFICATION resolved in Technical Context
-- [x] Constitution gates pass (see plan.md)
-- [x] Chapter-to-source mapping defined (4 chapters → 4 source files)
-- [x] SwiftData common errors identified (5 documented)
-- [x] Platform compatibility matrix documented
-- [x] SUMMARY.md structure defined
-- [x] advance-overview.md update plan defined
-- [x] Empty advance.md resolution defined
+**Swift Documentation**: https://docs.swift.org/swift-book/LanguageGuide/Properties.html#ID612
 
-### Risks Identified
+**Key Concepts**:
+- `@propertyWrapper` attribute
+- `wrappedValue` for underlying storage
+- `projectedValue` for additional operations ($ prefix)
+- Composition via nested wrappers
 
-| Risk | Mitigation |
-|------|------------|
-| SwiftData requires macOS 14+ | Document #available guard, provide in-memory alternative |
-| swift-nio declared but not used | Skip SwiftNIO chapter, keep dependency for future |
-| FileManager paths differ on Linux | Document path differences in chapter |
-| `try!` in AdvanceSample.swift | Use as anti-pattern example in "常见错误" section |
+**Built-in Examples**: @State, @Binding (SwiftUI), @Published (Combine)
 
----
+**Sample Implementation Pattern**:
+```swift
+// PropertyWrapperSample.swift - Custom wrappers
+@propertyWrapper
+struct Clamped<Value: Comparable> {
+    var wrappedValue: Value {
+        didSet { wrappedValue = min(max(wrappedValue, range.lowerBound), range.upperBound) }
+    }
+    var projectedValue: Clamped { self }
+    var range: ClosedRange<Value>
+    
+    init(wrappedValue: Value, _ range: ClosedRange<Value>) {
+        self.wrappedValue = min(max(wrappedValue, range.lowerBound), range.upperBound)
+        self.range = range
+    }
+}
+
+@propertyWrapper
+struct Logged<Value> {
+    var wrappedValue: Value {
+        didSet { print("Changed to: \(wrappedValue)") }
+    }
+    
+    init(wrappedValue: Value) {
+        self.wrappedValue = wrappedValue
+        print("Initialized: \(wrappedValue)")
+    }
+}
+
+struct Example {
+    @Clamped(0...100) var score: Int = 50
+    @Logged var name: String = "Alice"
+}
+
+func propertyWrapperSample() {
+    var ex = Example()
+    ex.score = 150 // Clamped to 100
+    ex.name = "Bob" // Logs change
+    print(ex.$score.projectedValue.range) // Access projected
+}
+```
+
+### 6. ARC Memory Management
+
+**Swift Documentation**: https://docs.swift.org/swift-book/LanguageGuide/AutomaticReferenceCounting.html
+
+**Key Concepts**:
+- Strong references (default, increments count)
+- `weak` references (optional, nil when freed)
+- `unowned` references (non-optional, crash if freed)
+- Closures capture self (use `[weak self]`)
+
+**Common Pitfalls**:
+- Two-way strong references = retain cycle
+- Closures capturing self strongly
+- Using `unowned` when `weak` is safer
+
+**Sample Implementation Pattern**:
+```swift
+// ARCSample.swift - Memory management examples
+class Person {
+    let name: String
+    var pet: Pet? // Strong reference
+    
+    init(name: String) { self.name = name }
+    deinit { print("Person \(name) deinitialized") }
+}
+
+class Pet {
+    let name: String
+    weak var owner: Person? // Weak to break cycle
+    
+    init(name: String) { self.name = name }
+    deinit { print("Pet \(name) deinitialized") }
+}
+
+func arcSample() {
+    var person: Person? = Person(name: "Alice")
+    var pet: Pet? = Pet(name: "Fluffy")
+    
+    // Create cycle
+    person?.pet = pet
+    pet?.owner = person
+    
+    // ✅ Cycle broken by weak reference
+    person = nil // Both deinit
+    pet = nil
+    
+    // Closure capture
+    let closure = { [weak person] in
+        guard let person else { return }
+        print(person.name)
+    }
+}
+```
+
+### 7. Opaque/Existential Types
+
+**Swift Documentation**: https://docs.swift.org/swift-book/LanguageGuide/OpaqueTypes.html
+
+**Key Concepts**:
+- `some Protocol` = opaque return type (caller sees protocol, callee sees concrete)
+- `any Protocol` = existential type (type erasure, dynamic dispatch)
+- Performance: opaque is zero-cost, existential has runtime overhead
+
+**Sample Implementation Pattern**:
+```swift
+// OpaqueTypeSample.swift - some vs any
+protocol Shape {
+    func area() -> Double
+}
+
+struct Circle: Shape {
+    let radius: Double
+    func area() -> Double { .pi * radius * radius }
+}
+
+struct Square: Shape {
+    let side: Double
+    func area() -> Double { side * side }
+}
+
+// Opaque return type - concrete type preserved
+func makeShape() -> some Shape {
+    Circle(radius: 5)
+}
+
+// Existential type - type erased
+func makeShapes() -> [any Shape] {
+    [Circle(radius: 5), Square(side: 10)]
+}
+
+func opaqueTypeSample() {
+    let shape = makeShape() // some Shape
+    print(shape.area())
+    
+    let shapes = makeShapes() // [any Shape]
+    for s in shapes { print(s.area()) }
+}
+```
+
+### 8. Unsafe Pointers
+
+**Swift Documentation**: https://docs.swift.org/swift-book/LanguageGuide/UnsafePointers.html
+
+**Key Concepts**:
+- `UnsafePointer<T>` - read-only pointer
+- `UnsafeMutablePointer<T>` - mutable pointer
+- `UnsafeRawPointer` - typeless pointer
+- `withUnsafePointer(to:) {}` - safe temporary access
+
+**Best Practices**:
+- Prefer safe APIs over unsafe
+- Use `withUnsafePointer` for scoped access
+- Document memory safety assumptions
+- Bind memory before typed access
+
+**Sample Implementation Pattern**:
+```swift
+// UnsafePointerSample.swift - C interop example
+func unsafePointerSample() {
+    var array: [Int] = [1, 2, 3, 4, 5]
+    
+    // Safe scoped access
+    array.withUnsafeBufferPointer { buffer in
+        let base = buffer.baseAddress!
+        print("First element: \(base.pointee)")
+        
+        // Pointer arithmetic
+        for i in 0..<buffer.count {
+            print(buffer[i])
+        }
+    }
+    
+    // Memory layout
+    let size = MemoryLayout<Int>.size
+    let stride = MemoryLayout<Int>.stride
+    print("Int size: \(size), stride: \(stride)")
+}
+```
+
+### 9. Swift Macros
+
+**Swift Documentation**: https://docs.swift.org/swift-book/LanguageGuide/Macros.html
+
+**Key Concepts**:
+- Freestanding macros (`#macroName`)
+- Attached macros (`@attachedMacro`)
+- SwiftSyntax for macro implementation
+- Macro expansion visible via `-dmacro-expansion`
+
+**Built-in Examples**: @Model (SwiftData), @Observable (Observation)
+
+**Sample Implementation Pattern**:
+```swift
+// MacroSample.swift - Using built-in macros
+import SwiftData
+
+@Model // Attached macro - generates persistence code
+class TodoItem {
+    var title: String
+    var completed: Bool = false
+    
+    init(title: String) {
+        self.title = title
+    }
+}
+
+func macroSample() {
+    // View expanded code: swift build -dmacro-expansion
+    let item = TodoItem(title: "Learn macros")
+    print(item.title)
+}
+```
+
+**Note**: Custom macro implementation requires separate macro target. Tutorial focuses on using built-in macros, not implementing custom ones.
+
+### 10. Result Builders
+
+**Swift Documentation**: https://docs.swift.org/swift-book/LanguageGuide/AdvancedOperators.html#ID63
+
+**Key Concepts**:
+- `@resultBuilder` attribute
+- `buildBlock(_:)` for combining values
+- `buildOptional(_:)` for if statements
+- `buildEither(_:)` for if/else
+
+**Built-in Examples**: ViewBuilder (SwiftUI), ArrayBuilder
+
+**Sample Implementation Pattern**:
+```swift
+// ResultBuilderSample.swift - Custom DSL
+@resultBuilder
+struct StringBuilder {
+    static func buildBlock(_ components: String...) -> String {
+        components.joined(separator: "\n")
+    }
+    
+    static func buildOptional(_ component: String?) -> String {
+        component ?? ""
+    }
+    
+    static func buildEither(first: String) -> String { first }
+    static func buildEither(second: String) -> String { second }
+}
+
+func buildString(@StringBuilder builder: () -> String) -> String {
+    builder()
+}
+
+func resultBuilderSample() {
+    let result = buildString {
+        "Line 1"
+        "Line 2"
+        if true {
+            "Line 3"
+        }
+    }
+    print(result) // "Line 1\nLine 2\nLine 3"
+}
+```
+
+### 11. Mirror Reflection
+
+**Swift Documentation**: https://developer.apple.com/documentation/swift/mirror
+
+**Key Concepts**:
+- `Mirror(reflecting:)` for runtime inspection
+- `children` property for member enumeration
+- `displayStyle` for type category (struct, class, enum)
+- Read-only (cannot modify via Mirror)
+
+**Best Practices**:
+- Use for debugging, logging, serialization
+- Avoid for production logic (slow, unsafe)
+- Document reflection limitations
+
+**Sample Implementation Pattern**:
+```swift
+// ReflectionSample.swift - Mirror examples
+struct User {
+    let name: String
+    var age: Int
+    var email: String?
+}
+
+func reflectionSample() {
+    let user = User(name: "Alice", age: 30, email: "alice@example.com")
+    
+    let mirror = Mirror(reflecting: user)
+    
+    print("Type: \(mirror.displayStyle ?? .unknown)") // .struct
+    
+    for child in mirror.children {
+        print("\(child.label ?? "unknown"): \(child.value)")
+    }
+    // name: Alice
+    // age: 30
+    // email: alice@example.com
+}
+```
+
+## Decisions Summary
+
+| Decision | Choice | Rationale |
+|----------|--------|-----------|
+| Web Framework | Vapor | Largest ecosystem, Fluent ORM |
+| SQL Database | GRDB | macOS/Linux cross-platform |
+| Actors Depth | 2 chapters | Isolation + Sendable complex |
+| Swift Features | All 7 features | Interrelated, better together |
+| Mock Testing | Skip | Original Q4 minimal coverage |
+| Chapter Template | 15-section | hello-rust expanded template |
 
 ## Next Steps
 
-Proceed to Phase 1:
-1. ✅ data-model.md generated
-2. Generate quickstart.md (setup instructions)
-3. Update agent context via script
-4. Proceed to `/speckit.tasks` for task breakdown
+1. Generate tasks.md via `/speckit.tasks`
+2. Implement Phase 3 chapters and source files
+3. Run `/speckit.analyze` for consistency check

@@ -39,6 +39,30 @@ public func advanceSample() {
     systemProgrammingSample()
     processExecutionSample()
 
+    // Phase 3: Concurrency samples (async)
+    Task {
+        await actorSample()
+        await sendableSample()
+    }
+    Thread.sleep(forTimeInterval: 1)
+
+    // Phase 3: Language feature samples
+    propertyWrapperSample()
+    arcSample()
+    opaqueTypeSample()
+    unsafePointerSample()
+    macroSample()
+    resultBuilderSample()
+    reflectionSample()
+
+    // Phase 3: Vapor and GRDB (require dependency resolution)
+    // Uncomment after `swift package resolve` completes:
+    // Task {
+    //     try? await vaporSample()
+    // }
+    // Thread.sleep(forTimeInterval: 1)
+    // try? grdbSample()
+
 }
 
 /// jsonSample

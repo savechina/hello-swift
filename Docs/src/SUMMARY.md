@@ -31,6 +31,17 @@
     - [SwiftNIO async/await](./advance/swift-nio-async.md) - Future 桥接, NIOLoopBoundBox
     - [系统编程](./advance/system-programming.md) - Process, Signal, 跨平台路径
     - [测试框架](./advance/testing.md) - XCTest, async 测试, 性能基准
+    - [Vapor Web 框架](./advance/vapor.md) - 路由, 中间件, Content 协议
+    - [GRDB SQL 数据库](./advance/grdb.md) - Record 协议, QueryInterface, 事务
+    - [Actors 并发模型](./advance/actors-basics.md) - actor 定义, 隔离域, await
+    - [Sendable 并发安全](./advance/sendable-deep.md) - Sendable 协议, @Sendable 闭包
+    - [Property Wrappers](./advance/property-wrappers.md) - @propertyWrapper, projectedValue
+    - [ARC 内存管理](./advance/arc-memory.md) - 引用计数, weak/unowned, 捕获列表
+    - [Opaque/Existential 类型](./advance/opaque-types.md) - some vs any, 类型擦除
+    - [Unsafe Pointers](./advance/unsafe-pointers.md) - 指针运算, MemoryLayout, C 互操作
+    - [Swift Macros](./advance/macros.md) - @attached, @freestanding, 宏展开
+    - [Result Builders](./advance/result-builders.md) - @resultBuilder, ViewBuilder 原理
+    - [Mirror Reflection](./advance/mirror-reflection.md) - Mirror, children, displayStyle
 
 # 实战精选 (Awesome)
 

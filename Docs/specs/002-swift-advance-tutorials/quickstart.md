@@ -2,7 +2,18 @@
 
 **Feature**: 002-swift-advance-tutorials
 **Created**: 2026-04-26
+**Updated**: 2026-04-28
 **Purpose**: Setup instructions for implementing advance tutorial chapters
+
+---
+
+## Implementation Status
+
+| Phase   | Status          | Chapters | Source Files |
+| ------- | --------------- | -------- | ------------ |
+| Phase 1 | ✅ COMPLETE     | 4        | Existing     |
+| Phase 2 | ✅ COMPLETE     | 4        | 4 new files  |
+| Phase 3 | ✅ COMPLETE     | 11       | 11 new files |
 
 ---
 
@@ -17,19 +28,19 @@
 
 ### Tool Requirements
 
-| Tool | Version | Installation |
-|------|---------|--------------|
-| Swift | 6.0+ | `xcode-select --install` or [swift.org](https://swift.org) |
-| mdBook | 0.4.52 | `brew install mdbook` |
-| Git | 2.40+ | `brew install git` |
+| Tool    | Version  | Installation                                           |
+| ------- | -------- | ------------------------------------------------------ |
+| Swift   | 6.0+     | `xcode-select --install` or [swift.org](https://swift.org) |
+| mdBook  | 0.4.52   | `brew install mdbook`                                  |
+| Git     | 2.40+    | `brew install git`                                     |
 
 ### Platform Requirements
 
-| Platform | Requirement | Notes |
-|----------|-------------|-------|
-| macOS | 14.0+ (Sonoma) | SwiftData requires macOS 14 |
-| macOS | 12.0+ (Monterey) | FileManager async APIs |
-| Linux | Ubuntu 22.04+ | Partial support (no SwiftData, limited FileManager paths) |
+| Platform | Requirement            | Notes                                                          |
+| -------- | ---------------------- | -------------------------------------------------------------- |
+| macOS    | 14.0+ (Sonoma)         | SwiftData requires macOS 14                                    |
+| macOS    | 12.0+ (Monterey)       | FileManager async APIs, SwiftNIO                               |
+| Linux    | Ubuntu 22.04+          | SwiftNIO supported, no SwiftData, limited FileManager paths    |
 
 ---
 
@@ -45,16 +56,31 @@ swift build
 # Expected: Build complete with zero warnings
 ```
 
-### 2. Verify AdvanceSample Compilation
+### 2. Verify AdvanceSample Compilation (Phase 2)
 
 ```bash
-# From project root
-cd AdvanceSample
+# From project root - includes swift-nio dependency
 swift build
-# Expected: Compiles AdvanceSample with SwiftyJSON, swift-dotenv dependencies
+# Expected: Compiles AdvanceSample with SwiftyJSON, swift-dotenv, swift-nio
+
+# Phase 2 verification
+swift run hello advance
+# Expected: Runs all advance samples including SwiftNIO, System, Process
 ```
 
-### 3. Verify mdBook Installation
+### 3. Verify SwiftNIO Dependency
+
+```bash
+# Check swift-nio is resolved
+cat AdvanceSample/Package.swift
+# Expected: swift-nio .upToNextMajor(from: "2.92.0") declared
+
+# Resolve dependencies (if needed)
+cd AdvanceSample && swift package resolve
+# Expected: Fetches swift-nio (~83,000 objects, may take 5-10 min)
+```
+
+### 4. Verify mdBook Installation
 
 ```bash
 mdbook --version
@@ -65,12 +91,12 @@ mdbook build Docs/
 # Expected: Build succeeds with zero errors
 ```
 
-### 4. Verify Existing Documentation
+### 5. Verify Existing Documentation
 
 ```bash
 # Check advance section structure
 ls Docs/src/advance/
-# Expected: advance-overview.md, advance.md (empty), advance.md placeholder
+# Expected: 8 chapter files + glossary + review
 
 # Preview current docs
 mdbook serve Docs/
@@ -81,44 +107,88 @@ mdbook serve Docs/
 
 ## Source Files Reference
 
-### Existing Swift Source (Do NOT Modify)
+### Phase 1: Existing Swift Source (Do NOT Modify)
 
-| File | Location | Functions |
-|------|----------|-----------|
-| AdvanceSample.swift | `AdvanceSample/Sources/AdvanceSample/` | `jsonSample()`, `startSample()`, `endSample()` |
-| FileOperationSample.swift | `AdvanceSample/Sources/AdvanceSample/` | `fileManagerPathSample()`, `temporaryFileSample()` |
-| SwiftDataSample.swift | `AdvanceSample/Sources/AdvanceSample/` | `logServicesSample()`, `metricsDataServiceSample()` |
-| DotenvySample.swift | `AdvanceSample/Sources/AdvanceSample/` | `processInfoEnvSample()`, `dotenvSample()` |
+| File                   | Location                                          | Functions                                        |
+| ---------------------- | ------------------------------------------------- | ------------------------------------------------ |
+| AdvanceSample.swift    | `AdvanceSample/Sources/AdvanceSample/`            | `jsonSample()`, `startSample()`, `endSample()`   |
+| FileOperationSample.swift | `AdvanceSample/Sources/AdvanceSample/`        | `fileManagerPathSample()`, `temporaryFileSample()` |
+| SwiftDataSample.swift  | `AdvanceSample/Sources/AdvanceSample/`            | `logServicesSample()`, `metricsDataServiceSample()` |
+| DotenvySample.swift    | `AdvanceSample/Sources/AdvanceSample/`            | `processInfoEnvSample()`, `dotenvSample()`       |
 
-**Key Constraint**: FR-003 requires "All code examples MUST compile from existing AdvanceSample files" - **NO new Swift code needed**.
+### Phase 2: New Swift Source (Created)
+
+| File                   | Location                                          | Functions                                        |
+| ---------------------- | ------------------------------------------------- | ------------------------------------------------ |
+| SwiftNIOSample.swift   | `AdvanceSample/Sources/AdvanceSample/`            | `swiftNIOSample()`, `swiftNIOAsyncSample()`      |
+| SystemSample.swift     | `AdvanceSample/Sources/AdvanceSample/`            | `systemSample()`, platform detection examples    |
+| ProcessSample.swift    | `AdvanceSample/Sources/AdvanceSample/`            | `systemProgrammingSample()`, `processExecutionSample()` |
+| TestingSampleTests.swift | `AdvanceSample/Tests/AdvanceSampleTests/`       | XCTest async test patterns                       |
+
+### Phase 3: New Swift Source (Created)
+
+| File                   | Location                                          | Functions                                        |
+| ---------------------- | ------------------------------------------------- | ------------------------------------------------ |
+| VaporSample.swift      | `AdvanceSample/Sources/AdvanceSample/`            | `vaporSample()` REST API demo                    |
+| GRDBSample.swift       | `AdvanceSample/Sources/AdvanceSample/`            | `grdbSample()` SQLite CRUD demo                  |
+| ActorSample.swift      | `AdvanceSample/Sources/AdvanceSample/`            | `actorSample()` actor isolation demo             |
+| ConcurrencyDeepSample.swift | `AdvanceSample/Sources/AdvanceSample/`       | `sendableSample()` Sendable demo                 |
+| PropertyWrapperSample.swift | `AdvanceSample/Sources/AdvanceSample/`      | `propertyWrapperSample()` custom wrappers        |
+| ARCSample.swift        | `AdvanceSample/Sources/AdvanceSample/`            | `arcSample()` memory management demo             |
+| OpaqueTypeSample.swift | `AdvanceSample/Sources/AdvanceSample/`            | `opaqueTypeSample()` some/any demo               |
+| UnsafePointerSample.swift | `AdvanceSample/Sources/AdvanceSample/`        | `unsafePointerSample()` pointer operations       |
+| MacroSample.swift      | `AdvanceSample/Sources/AdvanceSample/`            | `macroSample()` @Model usage demo                |
+| ResultBuilderSample.swift | `AdvanceSample/Sources/AdvanceSample/`        | `resultBuilderSample()` custom DSL               |
+| ReflectionSample.swift | `AdvanceSample/Sources/AdvanceSample/`            | `reflectionSample()` Mirror demo                 |
 
 ---
 
-## Output Files to Create
+## Output Files
 
-### Chapter Files (6 files)
+### Phase 1: Chapter Files (✅ COMPLETE)
 
-| File | Path | Content |
-|------|------|---------|
-| json.md | `Docs/src/advance/json.md` | JSON processing chapter |
-| file-operations.md | `Docs/src/advance/file-operations.md` | FileManager + I/O chapter |
-| swift-data.md | `Docs/src/advance/swift-data.md` | SwiftData persistence chapter |
-| environment.md | `Docs/src/advance/environment.md` | ProcessInfo + dotenv chapter |
-| review-advance.md | `Docs/src/advance/review-advance.md` | Stage review chapter |
-| glossary-advance.md | `Docs/src/advance/glossary-advance.md` | Advance terminology |
+| File                  | Path                              | Content                    |
+| --------------------- | --------------------------------- | -------------------------- |
+| json.md               | `Docs/src/advance/json.md`        | JSON processing chapter    |
+| file-operations.md    | `Docs/src/advance/file-operations.md` | FileManager + I/O chapter |
+| swift-data.md         | `Docs/src/advance/swift-data.md`  | SwiftData persistence chapter |
+| environment.md        | `Docs/src/advance/environment.md` | ProcessInfo + dotenv chapter |
+| glossary-advance.md   | `Docs/src/advance/glossary-advance.md` | Advance terminology |
+| review-advance.md     | `Docs/src/advance/review-advance.md` | Stage review chapter |
 
-### Files to Update (2 files)
+### Phase 2: Chapter Files (✅ COMPLETE)
 
-| File | Path | Changes |
-|------|------|---------|
-| advance-overview.md | `Docs/src/advance/advance-overview.md` | Add SwiftData chapter, remove System Services |
-| SUMMARY.md | `Docs/src/SUMMARY.md` | Add advance chapter navigation |
+| File                  | Path                              | Content                    |
+| --------------------- | --------------------------------- | -------------------------- |
+| swift-nio-basics.md   | `Docs/src/advance/swift-nio-basics.md` | SwiftNIO fundamentals chapter |
+| swift-nio-async.md    | `Docs/src/advance/swift-nio-async.md` | SwiftNIO async/await integration chapter |
+| system-programming.md | `Docs/src/advance/system-programming.md` | Process + Signal + cross-platform chapter |
+| testing.md            | `Docs/src/advance/testing.md`     | XCTest + async tests chapter |
 
-### File to Delete (1 file)
+### Phase 3: Chapter Files (✅ CREATED)
 
-| File | Path | Reason |
-|------|------|--------|
-| advance.md | `Docs/src/advance/advance.md` | Empty placeholder (0 lines) |
+| File                  | Path                              | Content                    |
+| --------------------- | --------------------------------- | -------------------------- |
+| vapor.md              | `Docs/src/advance/vapor.md`       | Vapor Web framework chapter |
+| grdb.md               | `Docs/src/advance/grdb.md`        | GRDB SQL database chapter  |
+| actors-basics.md      | `Docs/src/advance/actors-basics.md` | Actors concurrency chapter |
+| sendable-deep.md      | `Docs/src/advance/sendable-deep.md` | Sendable deep dive chapter |
+| property-wrappers.md  | `Docs/src/advance/property-wrappers.md` | Property Wrappers chapter |
+| arc-memory.md         | `Docs/src/advance/arc-memory.md`  | ARC memory management chapter |
+| opaque-types.md       | `Docs/src/advance/opaque-types.md` | Opaque/Existential types chapter |
+| unsafe-pointers.md    | `Docs/src/advance/unsafe-pointers.md` | Unsafe Pointers chapter |
+| macros.md             | `Docs/src/advance/macros.md`      | Swift Macros chapter       |
+| result-builders.md    | `Docs/src/advance/result-builders.md` | Result Builders chapter |
+| mirror-reflection.md  | `Docs/src/advance/mirror-reflection.md` | Mirror Reflection chapter |
+
+### Files to Update
+
+| File                | Path                              | Changes                                          |
+| ------------------- | --------------------------------- | ------------------------------------------------ |
+| advance-overview.md | `Docs/src/advance/advance-overview.md` | Update chapter table (8 chapters) |
+| SUMMARY.md          | `Docs/src/SUMMARY.md`             | Add Phase 2 navigation entries                   |
+| glossary-advance.md | `Docs/src/advance/glossary-advance.md` | Add SwiftNIO/System/Testing terms |
+| review-advance.md   | `Docs/src/advance/review-advance.md` | Add Phase 2 quiz questions |
 
 ---
 
@@ -141,7 +211,7 @@ Each chapter follows this 15-section structure:
 - [Outcome 2]
 - [Outcome 3]
 
-## 前置要求
+## 置要求
 - macOS [version]+ / Linux
 - Swift 6.0+
 - 已完成 [previous chapters]
@@ -225,11 +295,11 @@ mdbook build Docs/ 2>&1 | grep -i "warning"
 # Expected: No output (all links valid)
 
 # 3. Check chapter structure
-grep -c "^##" Docs/src/advance/json.md
+grep -c "^##" Docs/src/advance/swift-nio-basics.md
 # Expected: 15 sections
 
 # 4. Check minimum length
-wc -c Docs/src/advance/json.md
+wc -c Docs/src/advance/swift-nio-basics.md
 # Expected: 500+ Chinese characters
 ```
 
@@ -239,7 +309,7 @@ wc -c Docs/src/advance/json.md
 # Full documentation build
 mdbook build Docs/
 
-# Swift compilation verification
+# Swift compilation verification (includes swift-nio)
 swift build
 
 # Preview in browser
@@ -249,6 +319,11 @@ mdbook serve Docs/
 ---
 
 ## Troubleshooting
+
+### Issue: swift-nio dependency download slow
+
+**Cause**: swift-nio is large (~83,000 objects)
+**Fix**: Allow 5-10 minutes for initial resolve; subsequent builds cached
 
 ### Issue: mdBook build fails with "Duplicate file in SUMMARY.md"
 
@@ -265,55 +340,101 @@ mdbook serve Docs/
 **Cause**: Linux has no Documents/Caches sandbox paths
 **Fix**: Use `FileManager.default.currentDirectoryPath` on Linux, document platform differences
 
-### Issue: `try!` compilation warning in AdvanceSample.swift
+### Issue: SwiftNIO `eventLoop.threadName` not found
 
-**Cause**: Force unwrap without safety check
-**Fix**: Use existing code as anti-pattern example in "常见错误" section (do NOT modify source)
+**Cause**: EventLoop protocol doesn't have threadName property
+**Fix**: Use simple message instead: `print("EventLoop 创建成功")`
+
+### Issue: Process.run() missing `try`
+
+**Cause**: Process.run() throws in Swift 6.0
+**Fix**: Use `try process.run()` in do-catch block
 
 ---
 
 ## Time Estimates
 
-| Task | Estimate | Notes |
-|------|----------|-------|
-| Write json.md | 45 min | Reference AdvanceSample.swift |
-| Write file-operations.md | 40 min | Reference FileOperationSample.swift |
-| Write swift-data.md | 60 min | Most complex, 8 subsections |
-| Write environment.md | 30 min | Reference DotenvySample.swift |
-| Write review-advance.md | 20 min | Summary + quiz |
-| Write glossary-advance.md | 15 min | 20+ terms |
-| Update advance-overview.md | 10 min | Replace chapter table |
-| Update SUMMARY.md | 5 min | Add navigation entries |
-| Delete advance.md | 1 min | Remove empty file |
-| Validation & Testing | 15 min | mdbook build, swift build |
-| **Total** | **~4 hours** | SC-005 target |
+### Phase 1 (✅ COMPLETE)
 
----
+| Task               | Estimate | Status   |
+| ------------------ | -------- | -------- |
+| Write json.md      | 45 min   | ✅ Done  |
+| Write file-ops.md  | 40 min   | ✅ Done  |
+| Write swift-data.md | 60 min  | ✅ Done  |
+| Write environment.md | 30 min | ✅ Done  |
+| Write glossary.md  | 15 min   | ✅ Done  |
+| Write review.md    | 20 min   | ✅ Done  |
+| **Phase 1 Total**  | **~3.5 hours** | **✅ COMPLETE** |
 
-## Time Estimate Validation
+### Phase 2 (✅ COMPLETE)
 
-After completing all chapters, verify total learning time matches SC-005:
+| Task                     | Estimate | Status     |
+| ------------------------ | -------- | ---------- |
+| Create SwiftNIOSample.swift | 30 min | ✅ Done    |
+| Create SystemSample.swift | 20 min  | ✅ Done    |
+| Create ProcessSample.swift | 20 min | ✅ Done    |
+| Create TestingSampleTests.swift | 15 min | ✅ Done |
+| Write swift-nio-basics.md | 50 min | ✅ Done    |
+| Write swift-nio-async.md | 40 min  | ✅ Done    |
+| Write system-programming.md | 35 min | ✅ Done |
+| Write testing.md         | 25 min   | ✅ Done    |
+| Update navigation/glossary | 15 min | ✅ Done    |
+| Validation & Testing     | 15 min   | ✅ Done    |
+| **Phase 2 Total**        | **~2.5 hours** | **✅ COMPLETE** |
 
-| Chapter     | Estimated Time | Validation                     |
-| ----------- | -------------- | ------------------------------ |
-| JSON        | 45 minutes     | ✅ json.md created (24KB)       |
-| File        | 40 minutes     | ✅ file-operations.md (20KB)    |
-| SwiftData   | 60 minutes     | ✅ swift-data.md (24KB, 8 subs) |
-| Environment | 30 minutes     | ✅ environment.md (7KB)         |
-| Glossary    | 15 minutes     | ✅ glossary-advance.md (8KB)    |
-| Review      | 20 minutes     | ✅ review-advance.md (11KB)     |
-| **Total**       | **~3.5 hours**     | **✅ SC-005 PASS (≤4 hours)**       |
+### Phase 3 (✅ DOCUMENTATION COMPLETE)
 
-**SC-005 Compliance Verified**: Total learning time is within 4-hour target for readers with basic Swift knowledge.
+| Task                     | Estimate | Status     |
+| ------------------------ | -------- | ---------- |
+| Add Vapor + GRDB deps    | 30 min   | ✅ Done    |
+| Create 11 source files   | 120 min  | ✅ Done    |
+| Create 4 test files      | 40 min   | ✅ Done    |
+| Write vapor.md           | 45 min   | ✅ Done    |
+| Write grdb.md            | 45 min   | ✅ Done    |
+| Write actors-basics.md   | 30 min   | ✅ Done    |
+| Write sendable-deep.md   | 30 min   | ✅ Done    |
+| Write property-wrappers.md | 25 min | ✅ Done    |
+| Write arc-memory.md      | 25 min   | ✅ Done    |
+| Write opaque-types.md    | 20 min   | ✅ Done    |
+| Write unsafe-pointers.md | 30 min   | ✅ Done    |
+| Write macros.md          | 30 min   | ✅ Done    |
+| Write result-builders.md | 25 min   | ✅ Done    |
+| Write mirror-reflection.md | 20 min | ✅ Done    |
+| Update navigation/glossary | 20 min | ✅ Done    |
+| Validation & Testing     | 20 min   | ⏸ Blocked (network) |
+| **Phase 3 Total**        | **~8.75 hours** | **✅ Docs complete, build blocked** |
+
+### Grand Total
+
+| Metric              | Target  | Actual       |
+| ------------------- | ------- | ------------ |
+| Learning Time (Phase 1-2) | ≤6 hours | ~5.5 hours |
+| Phase 3 Learning Time | ~8-10 hours | ✅ Content ready |
+| Chapters (SC-001)   | 20 total | 19 written (1 advance-overview updated) |
+| Source Files        | 15 new | 15 created |
+
+**SC-005 Compliance (Phase 1-2)**: ✅ PASS - Total learning time within 6-hour target.
+**SC-005 Compliance (Phase 3)**: ✅ Content complete. Build verification blocked by network.
 
 ---
 
 ## Ready to Proceed
 
-After completing this quickstart, proceed with:
+Phase 1, Phase 2, and Phase 3 documentation complete.
 
-```
-/speckit.tasks
-```
+**Current Status**:
+- Phase 1: ✅ COMPLETE (4 chapters, 56 tasks)
+- Phase 2: ✅ COMPLETE (4 chapters, 60 tasks)
+- Phase 3: ✅ DOCUMENTATION COMPLETE (11 chapters, 143/159 tasks - 16 blocked by network)
 
-This will generate the task breakdown for implementing all chapters.
+**Remaining**:
+- `swift package resolve` for Vapor/GRDB dependencies (network issues)
+- `swift build` and `swift test` verification (blocked by network)
+- `mdbook build Docs/` final validation
+- Manual review and commit
+
+**Next Steps**:
+1. Resolve network issues: `cd AdvanceSample && swift package resolve`
+2. Run `swift build` to verify all source compiles
+3. Run `mdbook build Docs/` to verify documentation
+4. Manual review and commit

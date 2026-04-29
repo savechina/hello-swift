@@ -442,6 +442,85 @@ try await box.withValue { channel in
 
 ---
 
+### Phase 3 问题
+
+**问题 8: Vapor 的路由和中间件是如何工作的？**
+
+<details>
+<summary>点击查看答案</summary>
+
+**路由**:
+- `app.get("api", "hello") { req in ... }` 将 URL 路径映射到处理函数
+- 支持 GET/POST/PUT/DELETE 等 HTTP 方法
+- 路径参数通过 `req.parameters.get("id")` 提取
+
+**中间件**:
+- 实现 `AsyncMiddleware` 协议，`respond(to:chainingTo:)` 方法
+- 在请求到达路由前或响应返回前拦截
+- 使用 `app.grouped(middleware)` 创建中间件组
+
+</details>
+
+---
+
+**问题 9: GRDB 的 FetchableRecord 和 PersistableRecord 有什么区别？**
+
+<details>
+<summary>点击查看答案</summary>
+
+| 协议 | 作用 | 方法 |
+|------|------|------|
+| FetchableRecord | 从数据库行解码为 Swift 类型 | `init(row:)` |
+| PersistableRecord | 将 Swift 类型写入数据库 | `encode(to:)`, `insert()`, `update()` |
+
+通常同时遵循两个协议实现完整的 CRUD 能力。
+
+</details>
+
+---
+
+**问题 10: Actor 和 Class 的主要区别是什么？**
+
+<details>
+<summary>点击查看答案</summary>
+
+| 特性 | Actor | Class |
+|------|-------|-------|
+| 并发安全 | ✅ 编译器保证 | ❌ 需要手动同步 |
+| 访问方式 | 需要 `await` | 直接访问 |
+| 引用语义 | 值语义（隔离） | 引用语义 |
+| 继承 | 不支持 | 支持 |
+| 适用场景 | 共享可变状态 | 需要继承或引用语义 |
+
+</details>
+
+---
+
+**问题 11: some 和 any 在什么场景下使用？**
+
+<details>
+<summary>点击查看答案</summary>
+
+- **`some Protocol`**: 返回单一具体类型，隐藏实现细节，零性能开销。适用于 API 返回值、SwiftUI `body`。
+- **`any Protocol`**: 存储异构集合，运行时类型擦除，有动态分发开销。适用于 `[any Shape]` 数组。
+
+</details>
+
+---
+
+**问题 12: Property Wrapper 的 wrappedValue 和 projectedValue 有什么区别？**
+
+<details>
+<summary>点击查看答案</summary>
+
+- **wrappedValue**: 属性的实际值，通过 `property` 访问
+- **projectedValue**: 包装器暴露的额外接口，通过 `$property` 访问
+- 典型例子：SwiftUI 的 `@State var count` → `count` 是值，`$count` 是 Binding
+
+</details>
+
+---
+
 ## 📈 自我评估
 
 完成以下检查项，评估你的掌握程度：
@@ -473,6 +552,25 @@ try await box.withValue { channel in
 - [ ] 能够编写 XCTestCase 测试类
 - [ ] 能够使用 async 测试方法
 - [ ] 能够使用 measure {} 性能测试
+
+### Phase 3 掌握度
+
+- [ ] 能够使用 Vapor 创建 REST API 和路由
+- [ ] 理解 Vapor 中间件的工作原理
+- [ ] 能够使用 GRDB 定义 Record 并执行 CRUD
+- [ ] 理解 QueryInterface 的类型安全查询
+- [ ] 能够定义 Actor 并理解隔离域
+- [ ] 理解 Sendable 协议和编译器并发检查
+- [ ] 能够定义自定义 Property Wrapper
+- [ ] 理解 wrappedValue 和 projectedValue 的区别
+- [ ] 能够使用 weak/unowned 打破 ARC 循环引用
+- [ ] 理解 some vs any 的选择策略
+- [ ] 能够使用 withUnsafeBufferPointer 安全访问指针
+- [ ] 理解 MemoryLayout 的 size/stride/alignment
+- [ ] 理解 Swift Macros 的编译时代码生成机制
+- [ ] 能够定义自定义 Result Builder
+- [ ] 理解 SwiftUI ViewBuilder 的工作原理
+- [ ] 能够使用 Mirror 运行时检查类型结构
 
 ---
 
