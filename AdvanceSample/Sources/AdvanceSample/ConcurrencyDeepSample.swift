@@ -18,14 +18,18 @@ func sendableSample() async {
     }
     
     let task2 = Task {
-        try await Task.sleep(for: .milliseconds(10))
+        try await Task.sleep(nanoseconds: 10 * 1_000_000)
         print("Task 2 also sees: \(data.name)")
         return data.name
     }
     
-    let age = await task1.value
-    let name = await task2.value
-    print("Results: \(name) is \(age)")
+    do {
+        let age = try await task1.value
+        let name = try await task2.value
+        print("Results: \(name) is \(age)")
+    } catch {
+        print("Task failed: \(error)")
+    }
     
     let closure: @Sendable () -> String = {
         return "Sendable closure captured: \(data.name)"

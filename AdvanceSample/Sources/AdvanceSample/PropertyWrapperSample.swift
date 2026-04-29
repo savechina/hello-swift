@@ -28,7 +28,7 @@ struct Logged<Value> {
     }
 }
 
-struct Player {
+struct GamePlayer {
     @Clamped(0...100) var score: Int = 50
     @Logged var name: String = "Unknown"
 }
@@ -36,7 +36,7 @@ struct Player {
 func propertyWrapperSample() {
     print("--- propertyWrapperSample start ---")
     
-    var player = Player()
+    var player = GamePlayer()
     
     player.score = 150
     print("Score after 150: \(player.score)")

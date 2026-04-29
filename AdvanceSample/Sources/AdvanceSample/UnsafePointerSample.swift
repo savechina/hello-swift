@@ -1,7 +1,7 @@
 func unsafePointerSample() {
     print("--- unsafePointerSample start ---")
     
-    var array: [Int] = [10, 20, 30, 40, 50]
+    let array: [Int] = [10, 20, 30, 40, 50]
     
     array.withUnsafeBufferPointer { buffer in
         guard let base = buffer.baseAddress else { return }

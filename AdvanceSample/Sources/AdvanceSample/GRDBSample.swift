@@ -12,11 +12,11 @@ func grdbSample() throws {
             t.column("score", .integer).notNull().defaults(to: 0)
         }
         
-        var alice = Player(name: "Alice", score: 100)
+        var alice = Player(id: nil, name: "Alice", score: 100)
         try alice.insert(db)
         print("Inserted: \(alice)")
         
-        var bob = Player(name: "Bob", score: 200)
+        var bob = Player(id: nil, name: "Bob", score: 200)
         try bob.insert(db)
         print("Inserted: \(bob)")
         
@@ -41,7 +41,7 @@ func grdbSample() throws {
     print("--- grdbSample end ---")
 }
 
-struct Player: FetchableRecord, PersistableRecord, CustomStringConvertible {
+struct Player: FetchableRecord, PersistableRecord, Codable, CustomStringConvertible {
     var id: Int64?
     var name: String
     var score: Int
