@@ -5,10 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "hello-swift",
-    //    platforms: [
-    //        .macOS(.v13),  // 支持 macOS 13 及更高版本
-    //        .iOS(.v13),  // 支持 iOS 13 及更高版本
-    //    ],
+    platforms: [
+        .macOS(.v10_15),
+    ],
     dependencies: [
         .package(
             url: "https://github.com/apple/swift-argument-parser.git",
