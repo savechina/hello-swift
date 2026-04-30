@@ -1,4 +1,4 @@
-# 🎭 参与者基础 (Actors Basics)
+# 🎭 Actors基础 (Actors Basics)
 
 ## 开篇故事
 

@@ -103,6 +103,6 @@
 | Error Handling    | 错误处理        |
 | Value Type        | 值类型          |
 | Reference Type    | 引用类型        |
-| Protocol-Oriented | 协议面向编程    |
+| Protocol-Oriented | 面向协议编程    |
 
 **Rationale**: Matches Apple's official Swift localization and common Swift community usage in Chinese.
